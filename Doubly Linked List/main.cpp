@@ -8,18 +8,14 @@
 
 typedef struct a_List
 {
+	// スコア構造体
 	typedef struct Score
 	{
-		int score;
+		int score;			// スコア
+		std::string name;	// 名前
 	};
 
-	typedef struct ID
-	{
-		std::string name;
-	};
-
-	Score score;	// スコア
-	ID id;	// 名前 
+	Score score{};
 	a_List* next = nullptr;	// 次の要素へのポインタ
 	a_List* prev = nullptr;	// 前の要素へのポインタ
 }list;
@@ -64,7 +60,7 @@ int main()
 		score = std::stoi(sScore);
 
 		new_node->score.score = score;// スコアを設定
-		new_node->id.name = name;	// 名前を設定
+		new_node->score.name = name;	// 名前を設定
 
 		if(list_head != nullptr && list_tail != nullptr)
 		{
@@ -95,7 +91,7 @@ int main()
 		{
 			break;
 		}
-		std::cout << current_node->score.score << "　" << current_node->id.name << "\n";
+		std::cout << current_node->score.score << "　" << current_node->score.name << "\n";
 		current_node = current_node->next;	// 次のノードに移動
 	}
 
