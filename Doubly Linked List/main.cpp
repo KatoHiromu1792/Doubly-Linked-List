@@ -1,12 +1,25 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 
 #define SCORE_FILE_PATH ("Scores.txt")
 
+
 typedef struct a_List
 {
-	std::string score;	// スコア
+	typedef struct Score
+	{
+		int score;
+	};
+
+	typedef struct ID
+	{
+		std::string name;
+	};
+
+	Score score;	// スコア
+	ID id;	// 名前 
 	a_List* next = nullptr;	// 次の要素へのポインタ
 	a_List* prev = nullptr;	// 前の要素へのポインタ
 }list;
@@ -30,8 +43,29 @@ int main()
 	{
 		list* new_node = new list;	// 新しいノードを作成
 
-		new_node->score = line;	// スコアを設定
-		
+		std::stringstream ss(line); // 行を文字列ストリームに変換
+		std::string word;
+
+		std::string sScore;
+		std::string name;
+		int i = 0;
+		int score;
+		while (ss >> word) {	// 空白区切りで単語取得
+			if (i == 0)
+			{
+				sScore = word;
+			}
+			else {
+				name = word;
+			}
+			i++;
+		}
+
+		score = std::stoi(sScore);
+
+		new_node->score.score = score;// スコアを設定
+		new_node->id.name = name;	// 名前を設定
+
 		if(list_head != nullptr && list_tail != nullptr)
 		{
 			list_tail->next = new_node;	// 末尾ノードの次のノードを設定
@@ -61,7 +95,7 @@ int main()
 		{
 			break;
 		}
-		std::cout << current_node->score << "\n";
+		std::cout << current_node->score.score << "　" << current_node->id.name << "\n";
 		current_node = current_node->next;	// 次のノードに移動
 	}
 
