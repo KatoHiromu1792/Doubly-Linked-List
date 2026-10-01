@@ -8,7 +8,7 @@
 
 typedef struct a_List
 {
-	// スコア構造体
+	// スコア構造体 
 	typedef struct Score
 	{
 		int score;			// スコア
