@@ -8,13 +8,14 @@
 
 typedef struct a_List
 {
+	// スコア構造体
 	typedef struct Score
 	{
 		int score;			// スコア
 		std::string name;	// 名前
 	};
 
-	Score score;	// スコア構造体
+	Score score{};
 	a_List* next = nullptr;	// 次の要素へのポインタ
 	a_List* prev = nullptr;	// 前の要素へのポインタ
 }list;
