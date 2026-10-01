@@ -4,4 +4,5 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="Doubly Linked List/Doubly Linked List.vcxproj" Id="03cb85ee-4dfa-462f-8525-dc1dff71a426" />
+  <Project Path="UnitTest_DoublyLinkedList/UnitTest_DoublyLinkedList.vcxproj" Id="e937b7e3-d294-4854-a56a-a37da58e91ad" />
 </Solution>
