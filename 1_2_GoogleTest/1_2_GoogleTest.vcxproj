@@ -113,11 +113,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UnitTest_DoublyLinkedList\UnitTest_DoublyLinkedList.vcxproj">
-      <Project>{e937b7e3-d294-4854-a56a-a37da58e91ad}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
