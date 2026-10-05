@@ -8,7 +8,13 @@ namespace ex01_DataStructure
 	{
 		namespace list
 		{
-			//ID:0
+			//====================================================
+			// ID			：0 
+			// 項目			：リストが空である場合の戻り値
+			// 戻り値		：0
+			// 意図する結果	：
+			// 補足			：
+			//====================================================
 			TEST(GetDataNumTest, ID00_TestGetDataNumWhenEmpty)
 			{
 				DoublyLinkedList list{};
