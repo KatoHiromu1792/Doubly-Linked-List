@@ -8,14 +8,26 @@ namespace ex01_DataStructure
 	{
 		namespace list
 		{
-			//ID:0
+			//====================================================
+			// ID			：0 
+			// 項目			：リストが空である場合の戻り値
+			// 戻り値		：0
+			// 意図する結果	：
+			// 補足			：
+			//====================================================
 			TEST(GetDataNumTest, ID00_TestGetDataNumWhenEmpty)
 			{
 				DoublyLinkedList list{};
 				EXPECT_EQ(0, list.size());
 			}
 
-			//ID:1
+			//====================================================
+			// ID			：1 
+			// 項目			：リスト末尾への挿入を行った際の戻り値
+			// 戻り値		：1
+			// 意図する結果	：
+			// 補足			：
+			//====================================================
 			TEST(GetDataNumTest, ID01_PushbackTest)
 			{
 				DoublyLinkedList list{};
@@ -23,7 +35,13 @@ namespace ex01_DataStructure
 				EXPECT_EQ(1, list.size());
 			}
 
-			//ID:2
+			//====================================================
+			// ID			：2 
+			// 項目			：リスト末尾への挿入が失敗した際の戻り値
+			// 戻り値		：0
+			// 意図する結果	：
+			// 補足			：
+			//====================================================
 			TEST(GetDataNumTest, ID02_FaildPushbackTest)
 			{
 				DoublyLinkedList list{};
@@ -31,7 +49,13 @@ namespace ex01_DataStructure
 				EXPECT_EQ(0, list.size());
 			}
 
-			//ID:3
+			//====================================================
+			// ID			：3 
+			// 項目			：データの挿入を行った際の戻り値
+			// 戻り値		：1
+			// 意図する結果	：
+			// 補足			：
+			//====================================================
 			TEST(GetDataNumTest, ID03_InsertTest)
 			{
 				DoublyLinkedList list{};
@@ -40,7 +64,13 @@ namespace ex01_DataStructure
 				EXPECT_EQ(1, list.size());
 			}
 
-			//ID:4
+			//====================================================
+			// ID			：4 
+			// 項目			：データの挿入に失敗した際の戻り値
+			// 戻り値		：0
+			// 意図する結果	：
+			// 補足			：
+			//====================================================
 			TEST(GetDataNumTest, ID04_FaildInsertTest)
 			{
 				DoublyLinkedList list{};
@@ -50,7 +80,13 @@ namespace ex01_DataStructure
 				EXPECT_EQ(0, list.size());
 			}
 
-			//ID:5
+			//====================================================
+			// ID			：5 
+			// 項目			：データの削除を行った際の戻り値
+			// 戻り値		：0
+			// 意図する結果	：
+			// 補足			：
+			//====================================================
 			TEST(GetDataNumTest, ID05_EraseTest)
 			{
 				DoublyLinkedList list{};
@@ -60,7 +96,13 @@ namespace ex01_DataStructure
 				EXPECT_EQ(0, list.size());
 			}
 
-			//ID:6
+			//====================================================
+			// ID			：6 
+			// 項目			：データの削除が失敗した際の戻り値
+			// 戻り値		：1
+			// 意図する結果	：
+			// 補足			：データを挿入した後、削除した場合。
+			//====================================================
 			TEST(GetDataNumTest, ID06_FaildEraseTest)
 			{
 				DoublyLinkedList list{};
@@ -72,7 +114,13 @@ namespace ex01_DataStructure
 				EXPECT_EQ(1, list.size());
 			}
 
-			//ID:7
+			//====================================================
+			// ID			：7 
+			// 項目			：リストが空である場合に、データの削除を行った際の戻り値
+			// 戻り値		：0
+			// 意図する結果	：
+			// 補足			：マイナスにならないかどうか
+			//====================================================
 			TEST(GetDataNumTest, ID07_EmptyEraseTest)
 			{
 				DoublyLinkedList list{};
@@ -80,7 +128,13 @@ namespace ex01_DataStructure
 				EXPECT_EQ(0, list.size());
 			}
 
-			//ID:9 先頭イテレータへ挿入
+			//====================================================
+			// ID			：9 
+			// 項目			：リストが空である場合に、先頭に挿入した際の挙動
+			// 戻り値		：TRUE
+			// 意図する結果	：イテレータの指す位置に要素が挿入されその位置にあった要素が後ろにずれる。
+			// 補足			：先頭イテレータ、末尾イテレータを引数で渡した場合について、個別に挙動をチェックすること
+			//====================================================
 			TEST(InsertTest, ID09_EmptyPushfrontTest)
 			{
 				DoublyLinkedList list{};
@@ -90,7 +144,13 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(itData.score == data.score && itData.name == data.name);
 			}
 
-			// ID:9 末尾イテレータへ挿入
+			//====================================================
+			// ID			：9 
+			// 項目			：リストが空である場合に、末尾に挿入した際の挙動
+			// 戻り値		：TRUE
+			// 意図する結果	：イテレータの指す位置に要素が挿入されその位置にあった要素が後ろにずれる。
+			// 補足			：先頭イテレータ、末尾イテレータを引数で渡した場合について、個別に挙動をチェックすること
+			//====================================================
 			TEST(InsertTest, ID09_EmptyPushbackTest)
 			{
 				DoublyLinkedList list{};
@@ -102,7 +162,13 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(itData.score == data.score && itData.name == data.name);
 			}
 
-			// ID:10 
+			//====================================================
+			// ID			：10
+			// 項目			：リストに複数の要素がある場合に、先頭イテレータを渡して、挿入した際の挙動
+			// 戻り値		：TRUE
+			// 意図する結果	：先頭に要素が挿入され、元々先頭だった要素が２番目になる。
+			// 補足			：
+			//====================================================		
 			TEST(InsertTest, ID10_PushFrontTest)
 			{
 				DoublyLinkedList list{};
@@ -115,7 +181,13 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(itData1.score == itData2.score && itData1.name == itData2.name);
 			}
 
-			// ID:11
+			//====================================================
+			// ID			：11
+			// 項目			：リストに複数の要素がある場合に、末尾イテレータを渡して、挿入した際の挙動
+			// 戻り値		：TRUE
+			// 意図する結果	：イテレータの指す位置に要素が挿入される
+			// 補足			：
+			//====================================================
 			TEST(InsertTest, ID11_PushBackTest)
 			{
 				DoublyLinkedList list{};
@@ -1146,6 +1218,54 @@ namespace ex01_DataStructure
 					originalNode.next == copyNode.next &&
 					originalNode.data.score == copyNode.data.score &&
 					originalNode.data.name == copyNode.data.name);
+			}
+
+			// ID:21
+			TEST(IteratorEqualCheck, ID21_ListEmptyCheckToBeginAndEndIterator)
+			{
+				DoublyLinkedList list{};
+				ASSERT_TRUE(list.begin().operator==(list.end()));
+			}
+
+			// ID:22
+			TEST(IteratorEqualCheck, ID22_SameIteratorComparison)
+			{
+				DoublyLinkedList list{};
+				list.push_back(ScoreData{ 10,"aaa" });
+				ASSERT_TRUE(list.begin().operator==(list.begin()));
+			}
+
+			// ID:23
+			TEST(IteratorEqualCheck, ID23_SameIteratorComparison)
+			{
+				DoublyLinkedList list{};
+				list.push_back(ScoreData{ 10,"aaa" });
+				list.push_back(ScoreData{ 20,"bbb" });
+				ASSERT_FALSE(list.begin().operator==(list.end()));
+			}
+
+			// ID:24
+			TEST(IteratorNotEqualCheck, ID24_ListEmptyCheckToBeginAndEndIterator)
+			{
+				DoublyLinkedList list{};
+				ASSERT_FALSE(list.begin().operator!=(list.end()));
+			}
+
+			// ID:25
+			TEST(IteratorNotEqualCheck, ID25_SameIteratorComparison)
+			{
+				DoublyLinkedList list{};
+				list.push_back(ScoreData{ 10,"aaa" });
+				ASSERT_FALSE(list.begin().operator!=(list.begin()));
+			}
+
+			// ID:26
+			TEST(IteratorNotEqualCheck, ID26_SameIteratorComparison)
+			{
+				DoublyLinkedList list{};
+				list.push_back(ScoreData{ 10,"aaa" });
+				list.push_back(ScoreData{ 20,"bbb" });
+				ASSERT_TRUE(list.begin().operator!= (list.end()));
 			}
 		}
 	}

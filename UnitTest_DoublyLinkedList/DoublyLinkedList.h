@@ -26,8 +26,6 @@ private:
 	int _size;// 要素数
 
 public:
-	//DoublyLinkedList() : _head(nullptr), _tail(nullptr) {}
-
 	class Iterator;
 
 	class  Const_Iterator {
@@ -129,29 +127,7 @@ public:
 		// イテレータの指す要素のアドレスを取得する
 		Node* operator&()const { return _node; }
 	};
-	//{
-	//	friend class DoublyLinkedList;
-	//	Iterator(DoublyLinkedList* list,Node* node):Const_Iterator(list,node){}
-	//public:
-	//	Iterator() = default;
-
-	//	/*T& operator*() const{ return this->operator*; }
-	//	T* operator->()const { return &this->_node->value; }*/
-
-	//	/*const T& operater* ()const {
-	//		return this->_node->value;
-	//	}*/
-	//	Iterator& operater++() {
-	//		Const_Iterator::operator++();
-	//		return *this;
-	//	}
-
-	//	Iterator& operator--() {
-	//		Const_Iterator::operator--();
-	//		return *this;
-	//	}
-	//};
-
+	
 public:
 	// 要素数を返す
 	int size() const { return _size; }
@@ -244,6 +220,8 @@ public:
 		return true;
 	}
 
+	// 指定した要素のイテレータを取得
+	// 引数：要素数
 	Iterator getter(int num) {
 		Iterator it = this->begin();
 		while (num > 0) { ++it; --num; }
@@ -251,10 +229,14 @@ public:
 		return it;
 	}
 
+	// 先頭コンストイテレータを取得
 	Const_Iterator cbegin() const{ return Const_Iterator(this,_head); }
+	// 末尾コンストイテレータを取得
 	Const_Iterator cend() const{ return Const_Iterator(this,nullptr); }
 
+	// 先頭イテレータを取得
 	Iterator begin() { return Iterator(this, _head); }
+	// 末尾イテレータを取得
 	Iterator end() { return Iterator(this, nullptr); }
 
 	// ID:2 リスト末尾への挿入が失敗した際の戻り値
@@ -263,15 +245,5 @@ public:
 		if (data.name == "xxx") return false;
 		return true;
 	}
-
-	// ID:3,4 データの挿入
-	// 挿入先のポインタがリスト内に存在するかを判定
-	//bool ContainsPointer(Iterator it)
-	//{
-	//	// リストが違うorノードがnullptrの場合もfalseを返す
-	//	if (it._list != this || it._node == nullptr) return false;
-
-	//	return true;
-	//}
 };
 
