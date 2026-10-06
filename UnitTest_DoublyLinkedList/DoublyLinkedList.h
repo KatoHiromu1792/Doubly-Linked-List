@@ -61,7 +61,7 @@ private:
 
 	Node* _head = nullptr;	// 先頭ポインタ
 	Node* _tail = nullptr;	// 末尾ポインタ
-	int _size;				// 要素数
+	int _size = 0;			// 要素数
 
 public:
 	class Iterator;
@@ -104,7 +104,7 @@ public:
 
 		// イテレータの指す要素を取得する(const)
 		const ScoreData& operator*()const {
-			assert(this != nullptr);
+			assert(_node != nullptr);
 			return _node->data;
 		}
 
@@ -192,7 +192,7 @@ public:
 
 		// イテレータの指す要素を取得する(非const)
 		ScoreData& operator*()const {
-			assert(this != nullptr);
+			assert(_node != nullptr);
 			return _node->data; 
 		}
 
@@ -311,63 +311,6 @@ public:
 	// 挿入に失敗させる条件として指定された名前であった場合にfalseを返す
 	bool CheckData(const ScoreData& data) {
 		if (data.name == "xxx") return false;
-		return true;
-	}
-
-	bool LoadFile(const char* filePath)
-	{
-		std::ifstream scoreFile(filePath);// ファイルを開く
-		if (!scoreFile) {
-			std::cout << filePath << "Failed to open the file\n";
-			return false;
-		}
-		else {
-			std::cout << filePath << "File opened successfully\n";
-		}
-
-		std::string line;
-		while (std::getline(scoreFile, line))
-		{
-
-			Node* newNode = new(std::nothrow)Node{nullptr,nullptr,ScoreData()};
-
-			std::stringstream ss(line); // 行を文字列ストリームに変換
-			std::string word;
-
-			std::string sScore;
-			std::string name;
-			int i = 0;
-			int score;
-			while (ss >> word) {	// 空白区切りで単語取得
-				if (i == 0)
-				{
-					sScore = word;
-				}
-				else {
-					name = word;
-				}
-				i++;
-			}
-
-			score = std::stoi(sScore);
-
-			newNode->data.score = score;// スコアを設定
-			newNode->data.name = name;	// 名前を設定
-
-			if (_head == nullptr || _tail == nullptr) 
-			{
-				_head = _tail = newNode;
-			}
-			else
-			{
-				_tail->next = newNode;	// 末尾ノードの次のノードを設定
-				newNode->prev = _tail;	// 新しいノードの前のノードを設定
-				_tail = newNode;	// 末尾ノードを更新
-			}
-		}
-
-		scoreFile.close();// ファイルを閉じる
-
 		return true;
 	}
 };
