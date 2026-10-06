@@ -27,7 +27,7 @@ namespace ex01_DataStructure
 			{
 	#if defined TT_TEST_INSERT_WHEN_CONST
 				const DoublyLinkedList list{};
-				DoublyLinkedList::Const_Iterator it = list.cbegin();
+				DoublyLinkedList::ConstIterator it = list.cbegin();
 				//list.insert(it, 1);//コンパイラエラー
 	#endif
 				SUCCEED();
@@ -38,7 +38,7 @@ namespace ex01_DataStructure
 			{
 	#if defined TT_TEST_ERASE_WHEN_CONST
 				const DoublyLinkedList list{};
-				DoublyLinkedList::Const_Iterator it = list.cbegin();
+				DoublyLinkedList::ConstIterator it = list.cbegin();
 				//list.erase(it); コンパイルエラー
 	#endif
 				SUCCEED();
@@ -93,9 +93,9 @@ namespace ex01_DataStructure
 			{
 #if defined TT_TEST_CONSTITERATOR_CANNOT_ASSIGN_DEREFERANCED_ELEMENT
 				DoublyLinkedList list{};
-				list.push_back(ScoreData{ 10,"aaa" });
+				list.insert(ScoreData{ 10,"aaa" });
 				auto it = list.cbegin();
-				//it.operator*().data = ScoreData{ 20,"bbb" };// コンパイルエラー
+				//it.operator*() = ScoreData{ 20,"bbb" };// コンパイルエラー
 #endif
 				SUCCEED();
 			}
@@ -105,7 +105,7 @@ namespace ex01_DataStructure
 			{
 #if defined TT_TEST_COPY_ITERATOR
 				DoublyLinkedList list{};
-				DoublyLinkedList::Const_Iterator cIt = list.cbegin();
+				DoublyLinkedList::ConstIterator cIt = list.cbegin();
 				//DoublyLinkedList::Iterator it = cIt;// コンパイルエラー
 #endif
 				SUCCEED();
@@ -116,7 +116,7 @@ namespace ex01_DataStructure
 			{
 #if defined TT_TEST_ASSIGNE_ITERATOR
 				DoublyLinkedList list{};
-				DoublyLinkedList::Const_Iterator cIt = list.cbegin();
+				DoublyLinkedList::ConstIterator cIt = list.cbegin();
 				DoublyLinkedList::Iterator it;
 				//it.operator=(cIt); // コンパイルエラー
 #endif
