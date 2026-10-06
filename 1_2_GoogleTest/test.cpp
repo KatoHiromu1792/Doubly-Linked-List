@@ -907,7 +907,7 @@ namespace ex01_DataStructure
 			TEST(GetTheElementTheIteratorPoints, ID00_TheListHasNoReference)
 			{
 				DoublyLinkedList::Iterator it;
-				ASSERT_TRUE(it.operator&()) << "the node is a nullptr";
+				EXPECT_DEATH(it.operator&(),"Assertion failed");
 			}
 
 			// ID:01
@@ -935,14 +935,14 @@ namespace ex01_DataStructure
 			TEST(GetTheElementTheIteratorPoints, ID03_ListEmptyGetBeginIterator)
 			{
 				DoublyLinkedList list{};
-				ASSERT_TRUE(list.begin().operator&()) << "the node is a nullptr";
+				EXPECT_DEATH(list.begin().operator&(), "Assertion failed");
 			}
 
 			// ID:04
 			TEST(GetTheElementTheIteratorPoints, ID04_GetEndIterator)
 			{
 				DoublyLinkedList list{};
-				ASSERT_TRUE(list.end().operator&()) << "the node is a nullptr";
+				EXPECT_DEATH(list.end().operator&(), "Assertion failed");
 			}
 
 			// ID:05
@@ -951,7 +951,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList::Iterator it;
 				++it;
 				it.operator=(it);
-				ASSERT_TRUE(it.operator&()) << "the node is a nullptr";
+				EXPECT_DEATH(it.operator&(), "Assertion failed");
 			}
 
 			// ID:06
@@ -961,7 +961,7 @@ namespace ex01_DataStructure
 				auto it = list.begin();
 
 				++it;
-				ASSERT_TRUE(it.operator&()) << "the node is a nullptr";
+				EXPECT_DEATH(it.operator&(), "Assertion failed");
 			}
 
 			// ID:07
@@ -971,7 +971,7 @@ namespace ex01_DataStructure
 				auto it = list.end();
 
 				++it;
-				ASSERT_TRUE(it.operator&()) << "the node is a nullptr";
+				EXPECT_DEATH(it.operator&(), "Assertion failed");
 			}
 
 			// ID:08
@@ -1036,7 +1036,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList::Iterator it;
 				it.operator--();
 				it.operator=(it);
-				ASSERT_TRUE(it.operator&()) << "the node is a nullptr";
+				EXPECT_DEATH(it.operator&(), "Assertion failed");
 			}
 
 			// ID:12
@@ -1045,7 +1045,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				auto it = list.end();
 				it.operator--();
-				ASSERT_TRUE(it.operator&()) << "the node is a nullptr";
+				EXPECT_DEATH(it.operator&(), "Assertion failed");
 			}
 
 			// ID:13
@@ -1054,7 +1054,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				auto it = list.begin();
 				it.operator--();
-				ASSERT_TRUE(it.operator&()) << "the node is a nullptr";
+				EXPECT_DEATH(it.operator&(), "Assertion failed");
 			}
 
 			// ID:14
