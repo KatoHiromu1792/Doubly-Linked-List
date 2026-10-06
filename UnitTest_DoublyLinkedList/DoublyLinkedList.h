@@ -104,13 +104,8 @@ public:
 
 		// イテレータの指す要素を取得する(const)
 		const ScoreData& operator*()const {
+			assert(this != nullptr);
 			return _node->data;
-		}
-
-		// イテレータの指す要素のアドレスを取得する
-		const ScoreData* operator&()const {
-			assert(!_node);
-			return &_node->data;
 		}
 
 		// リストの先頭に向かって１つ進める(前置)
@@ -184,6 +179,8 @@ public:
 	* @return 成績データ
 	* @fn ScoreData* operator&()const
 	* @return 成績データ
+	* @fn bool hasNest()
+	* @return 次ポインタの有無
 	*/
 	class Iterator : public ConstIterator
 	{
@@ -194,14 +191,17 @@ public:
 		Iterator() = default;
 
 		// イテレータの指す要素を取得する(非const)
-		ScoreData& operator*()const { 
+		ScoreData& operator*()const {
+			assert(this != nullptr);
 			return _node->data; 
 		}
 
-		// イテレータの指す要素のアドレスを取得する
-		ScoreData* operator&()const { 
-			assert(!_node);
-			return &_node->data; 
+		// 次の要素があるか
+		bool hasNest()
+		{
+			if (!_node->next) return false;
+
+			return true;
 		}
 	};
 
@@ -318,11 +318,11 @@ public:
 	{
 		std::ifstream scoreFile(filePath);// ファイルを開く
 		if (!scoreFile) {
-			std::cout << filePath << "ファイルを開くことができませんでした\n";
+			std::cout << filePath << "Failed to open the file\n";
 			return false;
 		}
 		else {
-			std::cout << filePath << "ファイルを開きました\n";
+			std::cout << filePath << "File opened successfully\n";
 		}
 
 		std::string line;

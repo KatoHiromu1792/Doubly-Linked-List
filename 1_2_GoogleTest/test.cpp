@@ -903,12 +903,14 @@ namespace ex01_DataStructure
 		
 		namespace Iterator
 		{
+#ifdef _DEBUG
 			// ID:00
 			TEST(GetTheElementTheIteratorPoints, ID00_TheListHasNoReference)
 			{
 				DoublyLinkedList::Iterator it;
-				EXPECT_DEATH(it.operator&(),"Assertion failed");
+				EXPECT_DEATH(it.operator*(), "Assertion failed");
 			}
+#endif // _DEBUG
 
 			// ID:01
 			TEST(GetTheElementTheIteratorPoints, ID01_AssignValueToTheIterator)
@@ -931,18 +933,19 @@ namespace ex01_DataStructure
 				);
 			}
 
+#ifdef _DEBUG
 			// ID:03
 			TEST(GetTheElementTheIteratorPoints, ID03_ListEmptyGetBeginIterator)
 			{
 				DoublyLinkedList list{};
-				EXPECT_DEATH(list.begin().operator&(), "Assertion failed");
+				EXPECT_DEATH(list.begin().operator*(), "Assertion failed");
 			}
 
 			// ID:04
 			TEST(GetTheElementTheIteratorPoints, ID04_GetEndIterator)
 			{
 				DoublyLinkedList list{};
-				EXPECT_DEATH(list.end().operator&(), "Assertion failed");
+				EXPECT_DEATH(list.end().operator*(), "Assertion failed");
 			}
 
 			// ID:05
@@ -951,7 +954,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList::Iterator it;
 				++it;
 				it.operator=(it);
-				EXPECT_DEATH(it.operator&(), "Assertion failed");
+				EXPECT_DEATH(it.operator*(), "Assertion failed");
 			}
 
 			// ID:06
@@ -961,7 +964,7 @@ namespace ex01_DataStructure
 				auto it = list.begin();
 
 				++it;
-				EXPECT_DEATH(it.operator&(), "Assertion failed");
+				EXPECT_DEATH(it.operator*(), "Assertion failed");
 			}
 
 			// ID:07
@@ -971,8 +974,9 @@ namespace ex01_DataStructure
 				auto it = list.end();
 
 				++it;
-				EXPECT_DEATH(it.operator&(), "Assertion failed");
+				EXPECT_DEATH(it.operator*(), "Assertion failed");
 			}
+#endif
 
 			// ID:08
 			TEST(IteratorMoveOneStepTowardEnd, ID08_MultipleElementGetIterator)
@@ -1030,13 +1034,14 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
 			}
 
+#ifdef _DEBUG
 			// ID:11
 			TEST(IteratorMoveOneStepTowardBegin, ID11_ListNoReferanceGetEndIterator)
 			{
 				DoublyLinkedList::Iterator it;
 				it.operator--();
 				it.operator=(it);
-				EXPECT_DEATH(it.operator&(), "Assertion failed");
+				EXPECT_DEATH(it.operator*(), "Assertion failed");
 			}
 
 			// ID:12
@@ -1045,7 +1050,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				auto it = list.end();
 				it.operator--();
-				EXPECT_DEATH(it.operator&(), "Assertion failed");
+				EXPECT_DEATH(it.operator*(), "Assertion failed");
 			}
 
 			// ID:13
@@ -1054,8 +1059,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				auto it = list.begin();
 				it.operator--();
-				EXPECT_DEATH(it.operator&(), "Assertion failed");
+				EXPECT_DEATH(it.operator*(), "Assertion failed");
 			}
+#endif // _DEBUG
 
 			// ID:14
 			TEST(IteratorMoveOneStepTowardBegin, ID14_MultipleElementGetIterator)
@@ -1068,14 +1074,13 @@ namespace ex01_DataStructure
 				auto it = list.end();
 				it.operator--();
 				auto itData = it.operator*();
-
-				for (int i = 2; i > 0; --i)
-				{
-					ASSERT_TRUE(itData.score == data[i].score && itData.name == data[i].name);
-					it.operator--();
-					if (it.operator&() == nullptr)continue;
-					itData = it.operator*();
-				}
+				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				--it;
+				itData = it.operator*();
+				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
+				--it;
+				itData = it.operator*();
+				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 			}
 
 			// ID:15
