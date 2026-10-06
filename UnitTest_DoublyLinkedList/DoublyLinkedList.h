@@ -42,6 +42,7 @@ struct ScoreData
 * @fn Iterator end()
 * @return 末尾イテレータ
 */
+template <typename T>
 class DoublyLinkedList
 {
 private:
@@ -52,7 +53,11 @@ private:
 	* @var next 次ポインタ
 	* @var data 成績データ
 	*/
-	struct Node;
+	struct Node {
+		Node* prev;			// 前のポインタ
+		Node* next;			// 次のポインタ
+		T data{};			// 成績データ
+	};
 
 	Node* _head = nullptr;	// 先頭ポインタ
 	Node* _tail = nullptr;	// 末尾ポインタ
@@ -98,78 +103,34 @@ public:
 		ConstIterator() = default;
 
 		// イテレータの指す要素を取得する(const)
-		const ScoreData& operator*()const {
-			return _node->data;
-		}
+		const ScoreData& operator*()const;
 
 		// イテレータの指す要素のアドレスを取得する
-		const ScoreData* operator&()const {
-			assert(!_node);
-			return &_node->data;
-		}
+		const ScoreData* operator&()const;
 
 		// リストの先頭に向かって１つ進める(前置)
-		ConstIterator& operator--() {
-			if (_node == nullptr) {
-				if (_list == nullptr)return *this;
-				_node = _list->_tail;
-				return *this;
-			}
-			if (_node->prev == nullptr) {
-				_node = nullptr;
-				return *this;
-			}
-
-			_node = _node->prev;
-			return *this;
-		}
+		ConstIterator& operator--();
 
 		// リストの先頭に向かって１つ進める(後置)
-		ConstIterator& operator--(int) {
-			ConstIterator tmp = *this;
-			--(*this);
-			return tmp;
-		}
+		ConstIterator& operator--(int);
 
 		// リストの末尾に向かって１つ進める（前置）
-		ConstIterator& operator++() {
-			if (_node == nullptr) {
-				return *this;
-			}
-			if (_node->next == nullptr) {
-				_node = nullptr;
-				return *this;
-			}
-			_node = _node->next;// 次のノードへ
-			return *this;
-		};
+		ConstIterator& operator++();
 
 		// リストの末尾に向かって１つ進める（後置）
-		ConstIterator& operator++(int) {
-			ConstIterator tmp = *this;
-			++(*this);
-			return tmp;
-		};
+		ConstIterator& operator++(int);
 
 		// コピーを行う（コピーコンストラクタ）
 		ConstIterator(Node* node) : _node(node) {}
 
 		// 代入を行う
-		ConstIterator& operator=(const Iterator& other) {
-			_node = other._node;
-			return *this;
-		}
+		ConstIterator& operator=(const Iterator& other);
 
 		// 同一か比較する
-		bool operator==(const ConstIterator& other)const {
-			return _node == other._node;
-		}
+		bool operator==(const ConstIterator& other)const;
 
 		// 異なるか比較する
-		bool operator!=(const ConstIterator& other)const {
-			return _node != other._node;
-		}
-
+		bool operator!=(const ConstIterator& other)const;
 	};
 
 	/**
@@ -180,7 +141,21 @@ public:
 	* @fn ScoreData* operator&()const
 	* @return 成績データ
 	*/
-	
+	class Iterator : public ConstIterator
+	{
+		friend class DoublyLinkedList;
+		Iterator(const DoublyLinkedList* list, Node* node)
+			: ConstIterator(list, node) {}
+
+	public:
+		Iterator() = default;
+
+		// イテレータの指す要素を取得する(非const)
+		ScoreData& operator*()const;
+
+		// イテレータの指す要素のアドレスを取得する
+		ScoreData* operator&()const;
+	};
 
 public:
 	~DoublyLinkedList();
@@ -197,12 +172,8 @@ public:
 	// 全要素削除
 	bool clear();
 
-	Iterator getter(int num) {
-		Iterator it = this->begin();
-		while (num > 0) { ++it; --num; }
-		while (num < 0) { --it; ++num; }
-		return it;
-	}
+	// 引数の要素数のイテレータを返す
+	Iterator getter(int num);
 
 	ConstIterator cbegin() const{ return ConstIterator(this,_head); }
 	ConstIterator cend() const{ return ConstIterator(this,nullptr); }
@@ -212,67 +183,9 @@ public:
 
 	// ID:2 リスト末尾への挿入が失敗した際の戻り値
 	// 挿入に失敗させる条件として指定された名前であった場合にfalseを返す
-	bool CheckData(const ScoreData& data) {
-		if (data.name == "xxx") return false;
-		return true;
-	}
+	bool CheckData(const ScoreData& data);
 
-	bool LoadFile(const char* filePath)
-	{
-		std::ifstream scoreFile(filePath);// ファイルを開く
-		if (!scoreFile) {
-			std::cout << filePath << "ファイルを開くことができませんでした\n";
-			return false;
-		}
-		else {
-			std::cout << filePath << "ファイルを開きました\n";
-		}
-
-		std::string line;
-		while (std::getline(scoreFile, line))
-		{
-
-			Node* newNode = new(std::nothrow)Node{nullptr,nullptr,ScoreData()};
-
-			std::stringstream ss(line); // 行を文字列ストリームに変換
-			std::string word;
-
-			std::string sScore;
-			std::string name;
-			int i = 0;
-			int score;
-			while (ss >> word) {	// 空白区切りで単語取得
-				if (i == 0)
-				{
-					sScore = word;
-				}
-				else {
-					name = word;
-				}
-				i++;
-			}
-
-			score = std::stoi(sScore);
-
-			newNode->data.score = score;// スコアを設定
-			newNode->data.name = name;	// 名前を設定
-
-			if (_head == nullptr || _tail == nullptr) 
-			{
-				_head = _tail = newNode;
-			}
-			else
-			{
-				_tail->next = newNode;	// 末尾ノードの次のノードを設定
-				newNode->prev = _tail;	// 新しいノードの前のノードを設定
-				_tail = newNode;	// 末尾ノードを更新
-			}
-		}
-
-		scoreFile.close();// ファイルを閉じる
-
-		return true;
-	}
+	bool LoadFile(const char* filePath);
 };
 
 #include "DoublyLinkedList.inl"
