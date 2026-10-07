@@ -1,8 +1,6 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <assert.h>
 
 /**
@@ -13,179 +11,227 @@
 */
 struct ScoreData
 {
-	int score;
-	std::string name;
+	int score = 0;
+	std::string name = "";
 };
 
 /**
 * @brief 双方向リストクラス
-* @details ノードを保持し、ノード間のつながりを制御するクラス
-* @var _head 先頭ポインタ
-* @var _tail 末尾ポインタ
-* @var _size 要素数
-* @fn int size() const
-* @return 要素数
-* @fn bool insert(ConstIterator pos, const ScoreData& data)
-* @return 挿入結果
-* @fn bool erase(ConstIterator pos)
-* @return 削除結果
-* @fn bool clear()
-* @return 全要素削除結果
-* @fn Iterator getter(int num)
-* @return イテレータ
-* @fn ConstIterator cbegin() const
-* @return 先頭コンストイテレータ
-* @fn ConstIterator cend() const
-* @return 末尾コンストイテレータ
-* @fn Iterator begin()
-* @return 先頭イテレータ
-* @fn Iterator end()
-* @return 末尾イテレータ
 */
-template <typename T>
+template<typename T>
 class DoublyLinkedList
 {
 private:
 	/**
 	* @brief ノード
 	* @details 前後のポインタと成績データを保持する構造体
-	* @var prev 前ポインタ
-	* @var next 次ポインタ
-	* @var data 成績データ
 	*/
-	struct Node {
-		Node* prev;			// 前のポインタ
-		Node* next;			// 次のポインタ
-		T data{};			// 成績データ
+	struct Node
+	{
+		Node* prev;				// 前ポインタ
+		Node* next;				// 次ポインタ
+		T data;					// 成績データ
 	};
 
-	Node* _head = nullptr;	// 先頭ポインタ
-	Node* _tail = nullptr;	// 末尾ポインタ
-	int _size;				// 要素数
+private:
+	Node* _sentinel = nullptr;	// 番兵ノード
+	int _size = 0;				// 要素数
 
 public:
+	DoublyLinkedList();
+	DoublyLinkedList(const DoublyLinkedList&) = delete;
+	~DoublyLinkedList();
+	DoublyLinkedList& operator=(const DoublyLinkedList&) = delete;
+
 	class Iterator;
 
 	/**
 	* @brief コンストイテレータ
 	* @details 読み取り専用のイテレータ
-	* 
-	* @fn const ScoreData* operator&()const
-	* @return 成績データ
-	* @fn const ScoreData* operator&()const
-	* @return 成績データのアドレス
-	* @fn ConstIterator& operator--()
-	* @return コンストイテレータ
-	* @fn ConstIterator& operator--(int)
-	* @return コンストイテレータ
-	* @fn ConstIterator& operator++()
-	* @return コンストイテレータ
-	* @fn ConstIterator& operator++(int)
-	* @return コンストイテレータ
-	* @fn ConstIterator(Node* node) : _node(node)
-	* @return void
-	* @fn ConstIterator& operator=(const Iterator& other)
-	* @return コンストイテレータ
-	* @fn bool operator==(const ConstIterator& other)const
-	* @return 比較結果
-	* @fn bool operator!=(const ConstIterator& other)const
-	* @return 比較結果
 	*/
 	class  ConstIterator {
-		friend class DoublyLinkedList;
+		friend class DoublyLinkedList<T>;
 	protected:
-		const DoublyLinkedList* _list = nullptr;
+		const DoublyLinkedList<T>* _list = nullptr;
 		Node* _node = nullptr;
 
-		ConstIterator(const DoublyLinkedList* list,Node* node)
-			: _list(list),_node(node){ }
+		ConstIterator(const DoublyLinkedList<T>* list, Node* node)
+			: _list(list), _node(node) {
+		}
 	public:
+		/**
+		* @brief デフォルトコンストラクタ
+		*/
 		ConstIterator() = default;
 
-		// イテレータの指す要素を取得する(const)
+		/**
+		* @brief デフォルトデストラクタ
+		*/
+		virtual ~ConstIterator() = default;
+
+		/**
+		* @brief イテレータの指定する位置の要素を取得する(const)
+		* 
+		* @retval data 指定位置のノードの要素を返す
+		*/
 		const ScoreData& operator*()const;
 
-		// イテレータの指す要素のアドレスを取得する
-		const ScoreData* operator&()const;
-
-		// リストの先頭に向かって１つ進める(前置)
+		/**
+		* @brief リストの先頭に向かってイテレータを１つ進める(前置)
+		* 
+		* @retval ConstIterator ノードの前ノードのイテレータを返す 
+		*/
 		ConstIterator& operator--();
 
-		// リストの先頭に向かって１つ進める(後置)
-		ConstIterator& operator--(int);
+		/**
+		* @brief リストの先頭に向かってイテレータを１つ進める(後置)
+		* 
+		* @retval ConstIterator	 ノードの前ノードのイテレータを返す
+		*/
+		ConstIterator operator--(int);
 
-		// リストの末尾に向かって１つ進める（前置）
+		/**
+		* @brief リストの末尾に向かってイテレータを１つ進める(前置)
+		* 
+		* @retval ConstIterator ノードの次ノードのイテレータを返す 
+		*/
 		ConstIterator& operator++();
 
-		// リストの末尾に向かって１つ進める（後置）
-		ConstIterator& operator++(int);
+		/**
+		* @brief リストの末尾に向かってイテレータを１つ進める(後置)
+		*
+		* @retval ConstIterator	 ノードの前ノードのイテレータを返す
+		*/
+		ConstIterator operator++(int);
 
-		// コピーを行う（コピーコンストラクタ）
+		/**
+		* @brief コピーを行う(引数付きコンストラクタ)
+		* 
+		* @param[in] node	コピー元のノード
+		*/
 		ConstIterator(Node* node) : _node(node) {}
 
-		// 代入を行う
+		/**
+		* @brief イテレータの代入をする
+		* 
+		* @param[in] other			代入するイテレータ
+		* 
+		* @retval ConstIterator		代入されたイテレータ
+		*/
 		ConstIterator& operator=(const Iterator& other);
 
-		// 同一か比較する
+		/**
+		* @brief イテレータ同士が同一か比較する
+		* 
+		* @param[in] other		比較対象のイテレータ
+		* 
+		* @retval true			同一のイテレータであるため成功
+		* @retval false			同一のイテレータでないため失敗
+		*/
 		bool operator==(const ConstIterator& other)const;
 
-		// 異なるか比較する
+		/**
+		* @brief イテレータ同士が異なるか比較する
+		*
+		* @param[in] other		比較対象のイテレータ
+		*
+		* @retval true			異なるイテレータであるため成功
+		* @retval false			異なるイテレータでないため失敗
+		*/
 		bool operator!=(const ConstIterator& other)const;
 	};
 
 	/**
 	* @brief イテレータクラス
 	* @details コンストイテレータクラスを継承
-	* @fn ScoreData& operator*()const
-	* @return 成績データ
-	* @fn ScoreData* operator&()const
-	* @return 成績データ
 	*/
 	class Iterator : public ConstIterator
 	{
-		friend class DoublyLinkedList;
-		Iterator(const DoublyLinkedList* list, Node* node)
-			: ConstIterator(list, node) {}
-
+		friend class DoublyLinkedList<T>;
+		Iterator(const DoublyLinkedList<T>* list, Node* node)
+			: ConstIterator(list, node) {
+		}
 	public:
+		/**
+		* @brief デフォルトコンストラクタ
+		*/
 		Iterator() = default;
 
-		// イテレータの指す要素を取得する(非const)
-		ScoreData& operator*()const;
+		/**
+		* @brief デフォルトデストラクタ
+		*/
+		~Iterator() = default;
 
-		// イテレータの指す要素のアドレスを取得する
-		ScoreData* operator&()const;
+		/**
+		* @brief イテレータの指定する位置の要素を返す(非const)
+		*/
+		T& operator*()const;
 	};
 
 public:
-	~DoublyLinkedList();
+	/**
+	* @brief リスト内の要素数を返す
+	* 
+	* @retval _size 要素数
+	*/
+	int size() const { return _size; }
 
-	// 要素数を返す
-	int size() const;
+	/**
+	* @brief 指定位置に要素を挿入する
+	* 
+	* @param[in] pos	挿入する位置を指定するイテレータ
+	* @param[in] data	挿入する要素
+	* 
+	* @retval true		挿入に成功
+	* @retval false		無効なイテレータを指定して失敗
+	*/
+	bool insert(const ConstIterator& pos, const T& data);
 
-	// データの挿入
-	bool insert(ConstIterator pos, const ScoreData& data);
+	/**
+	* @brief 指定位置の要素を削除する
+	* 
+	* @param[in] pos	挿入する位置を指定するイテレータ
+	* 
+	* @retval true		削除に成功
+	* @retval false		無効なイテレータを指定して失敗
+	*/
+	bool erase(const ConstIterator& pos);
 
-	// データの削除
-	bool erase(ConstIterator pos);
-
-	// 全要素削除
+	/**
+	* @brief リスト内の全ての要素を削除する
+	* 
+	* @retval true		全ての要素の削除に成功
+	* @retval false		リスト内に要素がないため失敗
+	*/
 	bool clear();
+	
+	/**
+	* @brief 先頭のコンストイテレータを返す
+	* 
+	* @retval _sentinel->next	参照のみの番兵ノードの次ノードのイテレータを返す
+	*/
+	ConstIterator cbegin() const;
 
-	// 引数の要素数のイテレータを返す
-	Iterator getter(int num);
+	/**
+	* @brief 末尾のコンストイテレータを返す
+	* 
+	* @retval _sentinel		番兵ノードのイテレータを返す
+	*/
+	ConstIterator cend() const;
 
-	ConstIterator cbegin() const{ return ConstIterator(this,_head); }
-	ConstIterator cend() const{ return ConstIterator(this,nullptr); }
+	/**
+	* @brief 先頭のイテレータを返す
+	*
+	* @retval _sentinel->next	番兵ノードの次ノードのイテレータを返す
+	*/
+	Iterator begin();
 
-	Iterator begin() { return Iterator(this, _head); }
-	Iterator end() { return Iterator(this, nullptr); }
-
-	// ID:2 リスト末尾への挿入が失敗した際の戻り値
-	// 挿入に失敗させる条件として指定された名前であった場合にfalseを返す
-	bool CheckData(const ScoreData& data);
-
-	bool LoadFile(const char* filePath);
+	/**
+	* @brief 末尾のイテレータを返す
+	*
+	* @retval _sentinel		番兵ノードのイテレータを返す
+	*/
+	Iterator end();
 };
 
 #include "DoublyLinkedList.inl"
