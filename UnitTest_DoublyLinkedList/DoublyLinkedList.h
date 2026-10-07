@@ -64,6 +64,10 @@ private:
 	int _size = 0;			// 要素数
 
 public:
+	DoublyLinkedList() = default;
+	DoublyLinkedList(const DoublyLinkedList&) = delete;
+	DoublyLinkedList& operator=(const DoublyLinkedList&) = delete;
+
 	class Iterator;
 
 	/**
@@ -125,7 +129,8 @@ public:
 		}
 
 		// リストの先頭に向かって１つ進める(後置)
-		ConstIterator& operator--(int) {
+		// 後置は値を参照ではなく、値で返す
+		ConstIterator operator--(int) {
 			ConstIterator tmp = *this;
 			--(*this);
 			return tmp;
@@ -145,7 +150,8 @@ public:
 		};
 
 		// リストの末尾に向かって１つ進める（後置）
-		ConstIterator& operator++(int) {
+		// 後置は値を参照ではなく、値で返す
+		ConstIterator operator++(int) {
 			ConstIterator tmp = *this;
 			++(*this);
 			return tmp;
@@ -214,11 +220,14 @@ public:
 	// データの挿入
 	bool insert(ConstIterator pos, const ScoreData& data) {
 
+		if (pos._list != this)return false;
 		if (!CheckData(data)) return false;
 
 		Node* next = pos._node;
 		Node* prev = next ? next->prev : _tail;
 		Node* n = new(std::nothrow) Node{prev,next,data};
+
+		if (n == nullptr)return false;
 
 		if (!next) { // end()への挿入→push_backと同じ
 			if (!_head) {
@@ -251,6 +260,8 @@ public:
 
 	// データの削除
 	bool erase(ConstIterator pos) {
+
+		if (pos._list != this)return false;
 		Node* curr = pos._node;
 
 		if (!curr) {

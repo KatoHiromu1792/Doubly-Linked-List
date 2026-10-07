@@ -15,7 +15,7 @@ namespace ex01_DataStructure
 			// ID:08
 			TEST(GetDataNumTest, ID08_TestGetDataNumWhenConst)
 			{
-#if defined TT_TEST_GET_DATA_NUM_WHEN_CONST
+#if defined TT_TEST_GET_DATA_NUM_IS_CONST
 				const DoublyLinkedList list{};
 				EXPECT_EQ(0, list.size());
 #endif
@@ -23,34 +23,34 @@ namespace ex01_DataStructure
 			}
 
 			// ID:15
-			TEST(ListManualTest, ID15_TestInsertWhenConst)
+			TEST(InsertTest, ID15_TestInsertWhenConst)
 			{
-	#if defined TT_TEST_INSERT_WHEN_CONST
+#if defined TT_TEST_INSERT_WHEN_CONST
 				const DoublyLinkedList list{};
 				DoublyLinkedList::ConstIterator it = list.cbegin();
 				//list.insert(it, 1);//コンパイラエラー
-	#endif
+#endif
 				SUCCEED();
 			}
 
 			// ID:22
 			TEST(EraseTest, ID22_TestEraseWhenConst)
 			{
-	#if defined TT_TEST_ERASE_WHEN_CONST
+#if defined TT_TEST_ERASE_WHEN_CONST
 				const DoublyLinkedList list{};
 				DoublyLinkedList::ConstIterator it = list.cbegin();
 				//list.erase(it); コンパイルエラー
-	#endif
+#endif
 				SUCCEED();
 			}
 
 			// ID:28
 			TEST(GetBeginIterator,ID28_TestGetBeginIteratorWhenConst)
 			{
-	#if defined TT_TEST_GET_BEGIN_ITERATOR_WHEN_CONST
+#if defined TT_TEST_GET_BEGIN_ITERATOR_WHEN_CONST
 				const DoublyLinkedList list{};
 				//list.begin();// コンパイルエラー
-	#endif
+#endif
 				SUCCEED();
 			}
 
@@ -67,10 +67,10 @@ namespace ex01_DataStructure
 			// ID:40
 			TEST(GetEndIterator, ID40_TestGetEndIteratorWhenConst)
 			{
-	#if defined TT_TEST_GET_END_ITERATOR_WHEN_CONST
+#if defined TT_TEST_GET_END_ITERATOR_WHEN_CONST
 				const DoublyLinkedList list{};
 				//list.end();// コンパイルエラー
-	#endif
+#endif
 				SUCCEED();
 			}
 
@@ -93,7 +93,6 @@ namespace ex01_DataStructure
 			{
 #if defined TT_TEST_CONSTITERATOR_CANNOT_ASSIGN_DEREFERANCED_ELEMENT
 				DoublyLinkedList list{};
-				list.insert(ScoreData{ 10,"aaa" });
 				auto it = list.cbegin();
 				//it.operator*() = ScoreData{ 20,"bbb" };// コンパイルエラー
 #endif

@@ -25,7 +25,7 @@ namespace ex01_DataStructure
 			TEST(GetDataNumTest, ID01_PushbackTest)
 			{
 				DoublyLinkedList list{};
-				list.insert(list.end(), ScoreData());
+				ASSERT_TRUE(list.insert(list.end(), ScoreData()));
 				EXPECT_EQ(1, list.size());
 			}
 
@@ -33,7 +33,7 @@ namespace ex01_DataStructure
 			TEST(GetDataNumTest, ID02_FaildPushbackTest)
 			{
 				DoublyLinkedList list{};
-				list.insert(list.end(), ScoreData{0,"xxx"});
+				ASSERT_FALSE(list.insert(list.end(), ScoreData{0,"xxx"}));
 				EXPECT_EQ(0, list.size());
 			}
 
@@ -42,7 +42,7 @@ namespace ex01_DataStructure
 			{
 				DoublyLinkedList list{};
 				auto it = list.begin();
-				list.insert(it, ScoreData());
+				ASSERT_TRUE(list.insert(it, ScoreData()));
 				EXPECT_EQ(1, list.size());
 			}
 
@@ -50,9 +50,9 @@ namespace ex01_DataStructure
 			TEST(GetDataNumTest, ID04_FaildInsertTest)
 			{
 				DoublyLinkedList list{};
-				auto it = list.begin();
-				--it;
-				list.insert(it, ScoreData{ 0,"xxx" });
+				DoublyLinkedList::Iterator it;
+
+				ASSERT_FALSE(list.insert(it, ScoreData()));
 				EXPECT_EQ(0, list.size());
 			}
 
@@ -60,9 +60,9 @@ namespace ex01_DataStructure
 			TEST(GetDataNumTest, ID05_EraseTest)
 			{
 				DoublyLinkedList list{};
-				list.insert(list.end(), ScoreData());
+				ASSERT_TRUE(list.insert(list.end(), ScoreData()));
 				EXPECT_EQ(1, list.size());
-				list.erase(list.begin());
+				ASSERT_TRUE(list.erase(list.begin()));
 				EXPECT_EQ(0, list.size());
 			}
 
@@ -74,7 +74,7 @@ namespace ex01_DataStructure
 				EXPECT_EQ(1, list.size());
 				auto it = list.begin();
 				--it;
-				list.erase(it);
+				ASSERT_FALSE(list.erase(it));
 				EXPECT_EQ(1, list.size());
 			}
 
@@ -82,7 +82,7 @@ namespace ex01_DataStructure
 			TEST(GetDataNumTest, ID07_EmptyEraseTest)
 			{
 				DoublyLinkedList list{};
-				list.erase(list.begin());
+				ASSERT_FALSE(list.erase(list.begin()));
 				EXPECT_EQ(0, list.size());
 			}
 
@@ -91,7 +91,7 @@ namespace ex01_DataStructure
 			{
 				DoublyLinkedList list{};
 				ScoreData data{ 0,"aaa" };
-				list.insert(list.begin(), data);
+				ASSERT_TRUE(list.insert(list.begin(), data));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data.score && itData.name == data.name);
 			}
@@ -101,7 +101,7 @@ namespace ex01_DataStructure
 			{
 				DoublyLinkedList list{};
 				ScoreData data({ 10,"aaa" });
-				list.insert(list.end(),data);
+				ASSERT_TRUE(list.insert(list.end(),data));
 				auto it = list.end();
 				--it;
 				ScoreData itData = it.operator*();
@@ -112,9 +112,9 @@ namespace ex01_DataStructure
 			TEST(InsertTest, ID10_PushFrontTest)
 			{
 				DoublyLinkedList list{};
-				list.insert(list.begin(), ScoreData{10,"aaa"});
+				ASSERT_TRUE(list.insert(list.begin(), ScoreData{10,"aaa"}));
 				ScoreData itData1 = list.begin().operator*();
-				list.insert(list.begin(), ScoreData{20,"bbb"});
+				ASSERT_TRUE(list.insert(list.begin(), ScoreData{20,"bbb"}));
 				auto it = list.end();
 				--it;
 				ScoreData itData2 = it.operator*();
@@ -125,7 +125,7 @@ namespace ex01_DataStructure
 			TEST(InsertTest, ID11_PushBackTest)
 			{
 				DoublyLinkedList list{};
-				list.insert(list.end(), ScoreData{10,"aaa"});
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{10,"aaa"}));
 				auto it = list.end();
 				ASSERT_TRUE(list.insert(it, ScoreData{ 20,"bbb" }));
 				ScoreData itData = list.begin().operator*();
@@ -142,10 +142,10 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 2;++i) {
-					list.insert(list.begin(), data[i]);
+					ASSERT_TRUE(list.insert(list.begin(), data[i]));
 				}
 				auto it = list.begin();
-				list.insert(it, data[2]);
+				ASSERT_TRUE(list.insert(it, data[2]));
 
 				it = list.begin();
 				ScoreData itData = it.operator*();
@@ -164,11 +164,11 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 2;++i) {
-					list.insert(list.begin(),data[i]);
+					ASSERT_TRUE(list.insert(list.begin(),data[i]));
 				}
 				auto it = list.begin();
 				++it;
-				list.insert(it, data[2]);
+				ASSERT_TRUE(list.insert(it, data[2]));
 
 				it = list.begin();
 				ScoreData itData = it.operator*();
@@ -187,10 +187,10 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 2;++i) {
-					list.insert(list.begin(), data[i]);
+					ASSERT_TRUE(list.insert(list.begin(), data[i]));
 				}
 				auto it = list.end();
-				list.insert(it, data[2]);
+				ASSERT_TRUE(list.insert(it, data[2]));
 
 				it = list.begin();
 				ScoreData itData = it.operator*();
@@ -210,10 +210,10 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 2;++i) {
-					list.insert(list.begin(),data[i]);
+					ASSERT_TRUE(list.insert(list.begin(), data[i]));
 				}
 				auto it = list.cbegin();
-				list.insert(it, data[2]);
+				ASSERT_TRUE(list.insert(it, data[2]));
 
 				it = list.begin();
 				ScoreData itData = it.operator*();
@@ -233,11 +233,11 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 2;++i) {
-					list.insert(list.begin(), data[i]);
+					ASSERT_TRUE(list.insert(list.begin(), data[i]));
 				}
 				auto it = list.cbegin();
 				++it;
-				list.insert(it, data[2]);
+				ASSERT_TRUE(list.insert(it, data[2]));
 
 				it = list.begin();
 				ScoreData itData = it.operator*();
@@ -257,12 +257,11 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 2;++i) {
-					list.insert(list.begin(), data[i]);
+					ASSERT_TRUE(list.insert(list.begin(), data[i]));
 				}
-				auto it = list.cend();
-				list.insert(it, data[2]);
+				ASSERT_TRUE(list.insert(list.cend(), data[2]));
 
-				it = list.begin();
+				auto it = list.begin();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
 				++it;
@@ -278,15 +277,15 @@ namespace ex01_DataStructure
 			{
 				DoublyLinkedList list{};
 				DoublyLinkedList::ConstIterator bummy;
-				auto it = list.insert(bummy, { 11,"aaa" });
 
-				ASSERT_FALSE(list.size() < 1);
+				ASSERT_FALSE(list.insert(bummy, {11,"aaa"}));
 			}
 
 			// ID:16
 			TEST(EraseTest, ID16_EmptyEraseTest)
 			{
 				DoublyLinkedList list{};
+
 				ASSERT_FALSE(list.erase(list.begin()));
 			}
 
@@ -296,10 +295,11 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(), data[i]);
+					ASSERT_TRUE(list.insert(list.end(), data[i]));
 				}
 				auto it = list.begin();
-				list.erase(it);
+		
+				ASSERT_TRUE(list.erase(it));
 				ASSERT_TRUE(it != list.begin());
 			}
 
@@ -309,10 +309,10 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(), data[i]));
 				}
 				auto it = list.end();
-				list.erase(it);
+				ASSERT_FALSE(list.erase(it));
 				ASSERT_TRUE(--it == --list.end());
 			}
 
@@ -322,11 +322,11 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				auto it = list.begin();
 				++it;
-				list.erase(it);
+				ASSERT_TRUE(list.erase(it));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 				it = list.end();
@@ -341,11 +341,11 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				auto it = list.cbegin();
 				++it;
-				list.erase(it);
+				ASSERT_TRUE(list.erase(it));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 				it = list.end();
@@ -376,7 +376,7 @@ namespace ex01_DataStructure
 			TEST(GetBeginIterator, ID24_OneElementGetIterator)
 			{
 				DoublyLinkedList list{};
-				list.insert(list.end(), ScoreData({10,"aaa"}));
+				ASSERT_TRUE(list.insert(list.end(), ScoreData({10,"aaa"})));
 				auto it = list.begin();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == 10 && itData.name == "aaa");
@@ -388,7 +388,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				auto it = list.begin();
 				ScoreData itData = it.operator*();
@@ -401,9 +401,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[4] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} ,{40,"ddd"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				list.insert(list.begin(),data[3]);
+				ASSERT_TRUE(list.insert(list.begin(),data[3]));
 				auto it = list.begin();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[3].score && itData.name == data[3].name);
@@ -415,11 +415,11 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[4] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} ,{40,"ddd"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				auto it = list.begin();
 				++it;
-				list.insert(it, data[3]);
+				ASSERT_TRUE(list.insert(it, data[3]));
 				it = list.getter(1);
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[3].score && itData.name == data[3].name);
@@ -431,9 +431,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[4] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} ,{40,"ddd"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				list.insert(list.end(), data[3]);
+				ASSERT_TRUE(list.insert(list.end(), data[3]));
 				auto it = list.begin();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
@@ -445,9 +445,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				list.erase(list.begin());
+				ASSERT_TRUE(list.erase(list.begin()));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
 			}
@@ -458,9 +458,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				list.erase(list.getter(1));
+				ASSERT_TRUE(list.erase(list.getter(1)));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 			}
@@ -471,9 +471,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				list.erase(list.end());
+				ASSERT_TRUE(list.erase(--list.end()));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 			}
@@ -491,7 +491,7 @@ namespace ex01_DataStructure
 			TEST(GetBeginConstIterator, ID30_OneElementGetBeginConstIterator)
 			{
 				DoublyLinkedList list{};
-				list.insert(list.end(),ScoreData({ 10,"aaa" }));
+				ASSERT_TRUE(list.insert(list.end(),ScoreData({ 10,"aaa" })));
 				ScoreData itData = list.cbegin().operator*();
 				ASSERT_TRUE(itData.score == 10 && itData.name == "aaa");
 			}
@@ -502,7 +502,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[4] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				ScoreData itData = list.cbegin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
@@ -514,9 +514,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 2;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				list.insert(list.begin(),data[2]);
+				ASSERT_TRUE(list.insert(list.begin(),data[2]));
 				ScoreData itData = list.cbegin().operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
 			}
@@ -527,9 +527,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[4] = { {10,"aaa"},{20,"bbb"},{30,"ccc"},{40,"ddd"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				list.insert(list.getter(1), data[3]);
+				ASSERT_TRUE(list.insert(list.getter(1), data[3]));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 			}
@@ -540,9 +540,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[4] = { {10,"aaa"},{20,"bbb"},{30,"ccc"},{40,"ddd"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				list.insert(list.end(),data[3]);
+				ASSERT_TRUE(list.insert(list.end(),data[3]));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 			}
@@ -553,9 +553,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				list.erase(list.begin());
+				ASSERT_TRUE(list.erase(list.begin()));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
 			}
@@ -566,9 +566,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				list.erase(list.getter(1));
+				ASSERT_TRUE(list.erase(list.getter(1)));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 			}
@@ -579,9 +579,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				list.erase(list.end());
+				ASSERT_TRUE(list.erase(--list.end()));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 			}
@@ -592,15 +592,14 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				DoublyLinkedList::Iterator dummyIt;
 
-				auto it = list.end();
-				ASSERT_TRUE(it == dummyIt);
+				ASSERT_TRUE(list.end() == dummyIt);
 			}
 
 			// ID:36
 			TEST(GetEndIterator, ID36_OneElementGetEndIterator)
 			{
 				DoublyLinkedList list{};
-				list.insert(list.end(), ScoreData{10,"aaa"});
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{10,"aaa"}));
 
 				ASSERT_TRUE(list.end() == nullptr);
 				auto it = list.end();
@@ -615,10 +614,8 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				ASSERT_TRUE(list.end() == nullptr);
 				auto it = list.end();
 				--it;
 				ScoreData itData = it.operator*();
@@ -631,11 +628,8 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				ASSERT_TRUE(list.end() == nullptr);
-
 				list.insert(list.begin(), ScoreData());
 
 				ASSERT_TRUE(list.end() == nullptr);
@@ -653,11 +647,7 @@ namespace ex01_DataStructure
 				for (int i = 0;i < 3;++i) {
 					list.insert(list.end(),data[i]);
 				}
-
-				ASSERT_TRUE(list.end() == nullptr);
-
-
-				list.insert(list.getter(1), ScoreData());
+				ASSERT_TRUE(list.insert(list.getter(1), ScoreData()));
 
 				ASSERT_TRUE(list.end() == nullptr);
 				auto it = list.end();
@@ -672,12 +662,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				ASSERT_TRUE(list.end() == nullptr);
-
-				list.insert(list.end(), ScoreData{40,"ddd"});
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{40,"ddd"}));
 
 				ASSERT_TRUE(list.end() == nullptr);
 				auto it = --list.end();
@@ -691,12 +678,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				ASSERT_TRUE(list.end() == nullptr);
-
-				list.erase(list.begin());
+				ASSERT_TRUE(list.erase(list.begin()));
 
 				ASSERT_TRUE(list.end() == nullptr);
 				auto it = --list.end();
@@ -710,12 +694,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				ASSERT_TRUE(list.end() == nullptr);
-
-				list.erase(list.getter(1));
+				ASSERT_TRUE(list.erase(list.getter(1)));
 
 				ASSERT_TRUE(list.end() == nullptr);
 				auto it = --list.end();
@@ -729,12 +710,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				ASSERT_TRUE(list.end() == nullptr);
-
-				list.erase(--list.end());
+				ASSERT_TRUE(list.erase(--list.end()));
 
 				ASSERT_TRUE(list.end() == nullptr);
 				auto it = --list.end();
@@ -746,16 +724,16 @@ namespace ex01_DataStructure
 			TEST(GetEndConstIterator, ID41_EmptyGetConstIterator)
 			{
 				DoublyLinkedList list{};
-				DoublyLinkedList::ConstIterator cIt;
+				DoublyLinkedList::ConstIterator dummy;
 
-				ASSERT_TRUE(list.cend() == cIt);
+				ASSERT_TRUE(list.cend() == dummy);
 			}
 
 			// ID:42
 			TEST(GetEndConstIterator, ID42_OneElementGetConstIterator)
 			{
 				DoublyLinkedList list{};
-				list.insert(list.end(), ScoreData{10,"aaa"});
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{10,"aaa"}));
 
 				ASSERT_TRUE(list.cend() == nullptr);
 
@@ -770,7 +748,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 
 				ASSERT_TRUE(list.cend() == nullptr);
@@ -786,12 +764,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				ASSERT_TRUE(list.cend() == nullptr);
-
-				list.insert(list.begin(),ScoreData());
+				ASSERT_TRUE(list.insert(list.begin(),ScoreData()));
 
 				ASSERT_TRUE(list.cend() == nullptr);
 
@@ -806,12 +781,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				ASSERT_TRUE(list.cend() == nullptr);
-
-				list.insert(list.getter(1), ScoreData{100,"ddd"});
+				ASSERT_TRUE(list.insert(list.getter(1), ScoreData{100,"ddd"}));
 
 				ASSERT_TRUE(list.cend() == nullptr);
 
@@ -826,12 +798,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				ASSERT_TRUE(list.cend() == nullptr);
-
-				list.insert(list.end(), ScoreData{100,"ddd"});
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{100,"ddd"}));
 
 				ASSERT_TRUE(list.cend() == nullptr);
 
@@ -846,12 +815,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				ASSERT_TRUE(list.cend() == nullptr);
-
-				list.erase(list.begin());
+				ASSERT_TRUE(list.erase(list.begin()));
 
 				ASSERT_TRUE(list.cend() == nullptr);
 
@@ -866,12 +832,9 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				ASSERT_TRUE(list.cend() == nullptr);
-
-				list.erase(list.getter(1));
+				ASSERT_TRUE(list.erase(list.getter(1)));
 
 				ASSERT_TRUE(list.cend() == nullptr);
 
@@ -886,11 +849,8 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				ASSERT_TRUE(list.cend() == nullptr);
-
 				list.erase(--list.end());
 
 				ASSERT_TRUE(list.cend() == nullptr);
@@ -917,7 +877,7 @@ namespace ex01_DataStructure
 			{
 				DoublyLinkedList list{};
 
-				list.insert(list.end(), ScoreData{1, "a"});
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{1, "a"}));
 				auto it = list.begin();
 				auto itData = it.operator*();
 				ASSERT_TRUE(
@@ -984,7 +944,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				auto it = list.begin();
 				auto itData = it.operator*();
@@ -1004,7 +964,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				auto it = list.begin();
 				auto itData = it.operator*();
@@ -1022,7 +982,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				auto it = list.begin();
 				auto itData = it.operator*();
@@ -1069,7 +1029,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				auto it = list.end();
 				it.operator--();
@@ -1089,7 +1049,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				auto it = list.end();
 				--it;
@@ -1125,10 +1085,11 @@ namespace ex01_DataStructure
 			TEST(CopyIterator, ID18_CopyPreservesValue)
 			{
 				DoublyLinkedList list{};
-				list.insert(list.end(), ScoreData{10,"aaa"});
 				DoublyLinkedList::Iterator it = list.begin();
 				DoublyLinkedList::Iterator copy = it;
 
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{10,"aaa"}));
+				
 				ScoreData originalData, copyData;
 				originalData = it.operator*();
 				copyData = copy.operator*();
@@ -1141,9 +1102,11 @@ namespace ex01_DataStructure
 			TEST(AssignIterator, ID20_AssignmentValueEqualsOriginal)
 			{
 				DoublyLinkedList list{};
-				list.insert(list.end(), ScoreData{10,"aaa"});
 				DoublyLinkedList::Iterator it = list.begin();
 				DoublyLinkedList::Iterator copy;
+
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{ 10,"aaa" }));
+
 				copy.operator=(it);
 
 				ScoreData originalData, copyData;
