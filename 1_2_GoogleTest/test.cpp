@@ -27,13 +27,16 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				ASSERT_TRUE(list.insert(list.end(), ScoreData()));
 				EXPECT_EQ(1, list.size());
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			//ID:2
 			TEST(GetDataNumTest, ID02_FaildPushbackTest)
 			{
 				DoublyLinkedList list{};
-				ASSERT_FALSE(list.insert(list.end(), ScoreData{0,"xxx"}));
+				DoublyLinkedList::Iterator it;
+				ASSERT_FALSE(list.insert(it, ScoreData()));
 				EXPECT_EQ(0, list.size());
 			}
 
@@ -44,6 +47,8 @@ namespace ex01_DataStructure
 				auto it = list.begin();
 				ASSERT_TRUE(list.insert(it, ScoreData()));
 				EXPECT_EQ(1, list.size());
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			//ID:4
@@ -76,6 +81,8 @@ namespace ex01_DataStructure
 				--it;
 				ASSERT_FALSE(list.erase(it));
 				EXPECT_EQ(1, list.size());
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			//ID:7
@@ -94,6 +101,8 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(list.insert(list.begin(), data));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data.score && itData.name == data.name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:9 末尾イテレータへ挿入
@@ -106,6 +115,8 @@ namespace ex01_DataStructure
 				--it;
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data.score && itData.name == data.name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:10 
@@ -119,6 +130,8 @@ namespace ex01_DataStructure
 				--it;
 				ScoreData itData2 = it.operator*();
 				ASSERT_TRUE(itData1.score == itData2.score && itData1.name == itData2.name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:11
@@ -134,6 +147,8 @@ namespace ex01_DataStructure
 				--it;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == 20 && itData.name == "bbb");
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:12 リストに複数の要素が入った状態で先頭に挿入
@@ -156,6 +171,8 @@ namespace ex01_DataStructure
 				++it;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:12 リストに複数の要素が入った状態で中央に挿入
@@ -179,6 +196,8 @@ namespace ex01_DataStructure
 				++it;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:12 リストに複数の要素が入った状態で末尾に挿入
@@ -248,6 +267,8 @@ namespace ex01_DataStructure
 				++it;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:13 リストに複数の要素が入った状態で
@@ -270,6 +291,8 @@ namespace ex01_DataStructure
 				++it;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:14 
@@ -279,6 +302,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList::ConstIterator bummy;
 
 				ASSERT_FALSE(list.insert(bummy, {11,"aaa"}));
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:16
@@ -301,6 +325,8 @@ namespace ex01_DataStructure
 		
 				ASSERT_TRUE(list.erase(it));
 				ASSERT_TRUE(it != list.begin());
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:18
@@ -314,6 +340,8 @@ namespace ex01_DataStructure
 				auto it = list.end();
 				ASSERT_FALSE(list.erase(it));
 				ASSERT_TRUE(--it == --list.end());
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:19
@@ -333,6 +361,8 @@ namespace ex01_DataStructure
 				--it;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:20
@@ -352,6 +382,8 @@ namespace ex01_DataStructure
 				--it;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:21
@@ -367,9 +399,9 @@ namespace ex01_DataStructure
 			TEST(GetBeginIterator, ID23_EmptyGetIterator)
 			{
 				DoublyLinkedList list{};
-				DoublyLinkedList::Iterator dummyIt;
+				DoublyLinkedList::Iterator dummy;
 				auto it = list.begin();
-				ASSERT_TRUE(it.operator==(dummyIt));
+				ASSERT_TRUE(it.operator==(dummy));
 			}
 
 			// ID:24
@@ -380,6 +412,8 @@ namespace ex01_DataStructure
 				auto it = list.begin();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == 10 && itData.name == "aaa");
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:25
@@ -393,6 +427,8 @@ namespace ex01_DataStructure
 				auto it = list.begin();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:26 先頭にデータの挿入を行った後に、呼び出した際の挙動
@@ -407,6 +443,8 @@ namespace ex01_DataStructure
 				auto it = list.begin();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[3].score && itData.name == data[3].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:26 中央にデータの挿入を行った後に、呼び出した際の挙動
@@ -420,9 +458,12 @@ namespace ex01_DataStructure
 				auto it = list.begin();
 				++it;
 				ASSERT_TRUE(list.insert(it, data[3]));
-				it = list.getter(1);
+				it = list.begin();
+				++it;
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[3].score && itData.name == data[3].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:26 末尾にデータの挿入を行った後に、呼び出した際の挙動
@@ -437,6 +478,8 @@ namespace ex01_DataStructure
 				auto it = list.begin();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:27 先頭のデータの削除を行った後に、呼び出した際の挙動
@@ -450,6 +493,8 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(list.erase(list.begin()));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:27 中央のデータの削除を行った後に、呼び出した際の挙動
@@ -460,9 +505,11 @@ namespace ex01_DataStructure
 				for (int i = 0;i < 3;++i) {
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				ASSERT_TRUE(list.erase(list.getter(1)));
+				ASSERT_TRUE(list.erase(++list.begin()));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:27 末尾のデータの削除を行った後に、呼び出した際の挙動
@@ -476,6 +523,8 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(list.erase(--list.end()));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:29 
@@ -494,6 +543,8 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(list.insert(list.end(),ScoreData({ 10,"aaa" })));
 				ScoreData itData = list.cbegin().operator*();
 				ASSERT_TRUE(itData.score == 10 && itData.name == "aaa");
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:31
@@ -506,6 +557,8 @@ namespace ex01_DataStructure
 				}
 				ScoreData itData = list.cbegin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:32 先頭にデータの挿入を行った後に、呼び出した際の挙動
@@ -519,6 +572,8 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(list.insert(list.begin(),data[2]));
 				ScoreData itData = list.cbegin().operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:32 中央にデータの挿入を行った後に、呼び出した際の挙動
@@ -529,9 +584,11 @@ namespace ex01_DataStructure
 				for (int i = 0;i < 3;++i) {
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				ASSERT_TRUE(list.insert(list.getter(1), data[3]));
+				ASSERT_TRUE(list.insert(++list.begin(), data[3]));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:32 末尾にデータの挿入を行った後に、呼び出した際の挙動
@@ -545,6 +602,8 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(list.insert(list.end(),data[3]));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:33 先頭のデータの削除を行った後に、呼び出した際の挙動
@@ -558,6 +617,8 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(list.erase(list.begin()));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:33 中央のデータの削除を行った後に、呼び出した際の挙動
@@ -568,9 +629,11 @@ namespace ex01_DataStructure
 				for (int i = 0;i < 3;++i) {
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				ASSERT_TRUE(list.erase(list.getter(1)));
+				ASSERT_TRUE(list.erase(++list.begin()));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:33 末尾のデータの削除を行った後に、呼び出した際の挙動
@@ -584,6 +647,8 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(list.erase(--list.end()));
 				ScoreData itData = list.begin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:35
@@ -606,6 +671,8 @@ namespace ex01_DataStructure
 				--it;
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == 10 && itData.name == "aaa");
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:37
@@ -620,6 +687,8 @@ namespace ex01_DataStructure
 				--it;
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:38 先頭にデータの挿入を行った後に、呼び出した際の挙動
@@ -637,6 +706,8 @@ namespace ex01_DataStructure
 				--it;
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:38 中央にデータの挿入を行った後に、呼び出した際の挙動
@@ -645,15 +716,17 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				const ScoreData data[3] = { {10,"aaa"},{20,"bbb"},{30,"ccc"} };
 				for (int i = 0;i < 3;++i) {
-					list.insert(list.end(),data[i]);
+					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				ASSERT_TRUE(list.insert(list.getter(1), ScoreData()));
+				ASSERT_TRUE(list.insert(++list.begin(), ScoreData()));
 
 				ASSERT_TRUE(list.end() == nullptr);
 				auto it = list.end();
 				--it;
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:38 末尾にデータの挿入を行った後に、呼び出した際の挙動
@@ -686,6 +759,8 @@ namespace ex01_DataStructure
 				auto it = --list.end();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:39 中央のデータの削除を行った後に、呼び出した際の挙動
@@ -696,12 +771,14 @@ namespace ex01_DataStructure
 				for (int i = 0;i < 3;++i) {
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				ASSERT_TRUE(list.erase(list.getter(1)));
+				ASSERT_TRUE(list.erase(++list.begin()));
 
 				ASSERT_TRUE(list.end() == nullptr);
 				auto it = --list.end();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:39 末尾のデータの削除を行った後に、呼び出した際の挙動
@@ -718,6 +795,8 @@ namespace ex01_DataStructure
 				auto it = --list.end();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:41
@@ -740,6 +819,8 @@ namespace ex01_DataStructure
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == 10 && itData.name == "aaa");
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:43
@@ -756,6 +837,8 @@ namespace ex01_DataStructure
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:44 先頭にデータの挿入を行った後に、呼び出した際の挙動
@@ -773,6 +856,8 @@ namespace ex01_DataStructure
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:44 中央にデータの挿入を行った後に、呼び出した際の挙動
@@ -783,13 +868,15 @@ namespace ex01_DataStructure
 				for (int i = 0;i < 3;++i) {
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				ASSERT_TRUE(list.insert(list.getter(1), ScoreData{100,"ddd"}));
+				ASSERT_TRUE(list.insert(++list.begin(), ScoreData{100,"ddd"}));
 
 				ASSERT_TRUE(list.cend() == nullptr);
 
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:44 末尾にデータの挿入を行った後に、呼び出した際の挙動
@@ -807,6 +894,8 @@ namespace ex01_DataStructure
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == 100 && itData.name == "ddd");
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:45 先頭のデータの削除を行った後に、呼び出した際の挙動
@@ -824,6 +913,8 @@ namespace ex01_DataStructure
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:45 中央のデータの削除を行った後に、呼び出した際の挙動
@@ -834,13 +925,15 @@ namespace ex01_DataStructure
 				for (int i = 0;i < 3;++i) {
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				ASSERT_TRUE(list.erase(list.getter(1)));
+				ASSERT_TRUE(list.erase(++list.begin()));
 
 				ASSERT_TRUE(list.cend() == nullptr);
 
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:45 末尾のデータの削除を行った後に、呼び出した際の挙動
@@ -858,6 +951,8 @@ namespace ex01_DataStructure
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 		}
 		
@@ -868,7 +963,7 @@ namespace ex01_DataStructure
 			TEST(GetTheElementTheIteratorPoints, ID00_TheListHasNoReference)
 			{
 				DoublyLinkedList::Iterator it;
-				EXPECT_DEATH(it.operator*(), "Assertion failed");
+				EXPECT_DEATH(*it, "Assertion failed");
 			}
 #endif // _DEBUG
 
@@ -891,6 +986,8 @@ namespace ex01_DataStructure
 					itData.score == 10 &&
 					itData.name == "b"
 				);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 #ifdef _DEBUG
@@ -956,6 +1053,8 @@ namespace ex01_DataStructure
 				++it;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:09
@@ -974,6 +1073,8 @@ namespace ex01_DataStructure
 				++it;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:10
@@ -992,6 +1093,8 @@ namespace ex01_DataStructure
 				it++;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 #ifdef _DEBUG
@@ -1041,6 +1144,8 @@ namespace ex01_DataStructure
 				--it;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:15
@@ -1060,6 +1165,8 @@ namespace ex01_DataStructure
 				--it;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:16
@@ -1079,33 +1186,39 @@ namespace ex01_DataStructure
 				it--;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:18
 			TEST(CopyIterator, ID18_CopyPreservesValue)
 			{
 				DoublyLinkedList list{};
+				
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{10,"aaa"}));
+				
 				DoublyLinkedList::Iterator it = list.begin();
 				DoublyLinkedList::Iterator copy = it;
 
-				ASSERT_TRUE(list.insert(list.end(), ScoreData{10,"aaa"}));
-				
 				ScoreData originalData, copyData;
 				originalData = it.operator*();
 				copyData = copy.operator*();
 				ASSERT_TRUE(
 					originalData.score == copyData.score && 
 					originalData.name == copyData.name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 
 			// ID:20
 			TEST(AssignIterator, ID20_AssignmentValueEqualsOriginal)
 			{
 				DoublyLinkedList list{};
+				
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{ 10,"aaa" }));
+
 				DoublyLinkedList::Iterator it = list.begin();
 				DoublyLinkedList::Iterator copy;
-
-				ASSERT_TRUE(list.insert(list.end(), ScoreData{ 10,"aaa" }));
 
 				copy.operator=(it);
 
@@ -1116,6 +1229,64 @@ namespace ex01_DataStructure
 				ASSERT_TRUE(
 					originalData.score == copyData.score &&
 					originalData.name == copyData.name);
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
+			}
+
+			// ID:21
+			TEST(IteratorEqualCheck, ID21_ListEmptyCheckToBeginAndEndIterator)
+			{
+				DoublyLinkedList list{};
+				ASSERT_TRUE(list.begin().operator==(list.end()));
+			}
+
+			// ID:22
+			TEST(IteratorEqualCheck, ID22_SameIteratorComparison)
+			{
+				DoublyLinkedList list{};
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{10,"aaa"}));
+				ASSERT_TRUE(list.begin().operator==(list.begin()));
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
+			}
+
+			// ID:23
+			TEST(IteratorEqualCheck, ID23_SameIteratorComparison)
+			{
+				DoublyLinkedList list{};
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{ 10,"aaa" }));
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{ 20,"bbb" }));
+				ASSERT_FALSE(list.begin().operator==(list.end()));
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
+			}
+
+			// ID:24
+			TEST(IteratorNotEqualCheck, ID24_ListEmptyCheckToBeginAndEndIterator)
+			{
+				DoublyLinkedList list{};
+				ASSERT_FALSE(list.begin().operator!=(list.end()));
+			}
+
+			// ID:25
+			TEST(IteratorNotEqualCheck, ID25_SameIteratorComparison)
+			{
+				DoublyLinkedList list{};
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{ 10,"aaa" }));
+				ASSERT_FALSE(list.begin().operator!=(list.begin()));
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
+			}
+
+			// ID:26
+			TEST(IteratorNotEqualCheck, ID26_SameIteratorComparison)
+			{
+				DoublyLinkedList list{};
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{ 10,"aaa" }));
+				ASSERT_TRUE(list.insert(list.end(), ScoreData{ 20,"bbb" }));
+				ASSERT_TRUE(list.begin().operator!= (list.end()));
+				ASSERT_TRUE(list.clear());
+				ASSERT_EQ(0, list.size());
 			}
 		}
 	}

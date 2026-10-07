@@ -13,8 +13,8 @@
 */
 struct ScoreData
 {
-	int score;
-	std::string name;
+	int score = 0;
+	std::string name = "";
 };
 
 /**
@@ -108,6 +108,7 @@ public:
 
 		// イテレータの指す要素を取得する(const)
 		const ScoreData& operator*()const {
+			assert(_list != nullptr);
 			assert(_node != nullptr);
 			return _node->data;
 		}
@@ -157,11 +158,12 @@ public:
 			return tmp;
 		};
 
-		// コピーを行う（コピーコンストラクタ）
+		// コピーを行う(引数付きコンストラクタ)
 		ConstIterator(Node* node) : _node(node) {}
 
 		// 代入を行う
 		ConstIterator& operator=(const Iterator& other) {
+			_list = other._list;
 			_node = other._node;
 			return *this;
 		}
@@ -198,6 +200,7 @@ public:
 
 		// イテレータの指す要素を取得する(非const)
 		ScoreData& operator*()const {
+			assert(_list != nullptr);
 			assert(_node != nullptr);
 			return _node->data; 
 		}
@@ -218,10 +221,9 @@ public:
 	int size() const { return _size; }
 
 	// データの挿入
-	bool insert(ConstIterator pos, const ScoreData& data) {
+	bool insert(const ConstIterator& pos, const ScoreData& data) {
 
 		if (pos._list != this)return false;
-		if (!CheckData(data)) return false;
 
 		Node* next = pos._node;
 		Node* prev = next ? next->prev : _tail;
@@ -259,7 +261,7 @@ public:
 	}
 
 	// データの削除
-	bool erase(ConstIterator pos) {
+	bool erase(const ConstIterator& pos) {
 
 		if (pos._list != this)return false;
 		Node* curr = pos._node;
@@ -302,14 +304,9 @@ public:
 		}
 		_head = _tail = nullptr;
 
-		return true;
-	}
+		_size = 0;
 
-	Iterator getter(int num) {
-		Iterator it = this->begin();
-		while (num > 0) { ++it; --num; }
-		while (num < 0) { --it; ++num; }
-		return it;
+		return true;
 	}
 
 	ConstIterator cbegin() const{ return ConstIterator(this,_head); }
@@ -317,12 +314,5 @@ public:
 
 	Iterator begin() { return Iterator(this, _head); }
 	Iterator end() { return Iterator(this, nullptr); }
-
-	// ID:2 リスト末尾への挿入が失敗した際の戻り値
-	// 挿入に失敗させる条件として指定された名前であった場合にfalseを返す
-	bool CheckData(const ScoreData& data) {
-		if (data.name == "xxx") return false;
-		return true;
-	}
 };
 
