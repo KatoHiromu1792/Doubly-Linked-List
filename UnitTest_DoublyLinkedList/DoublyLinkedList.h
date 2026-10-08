@@ -76,28 +76,28 @@ public:
 		/**
 		* @brief リストの先頭に向かってイテレータを１つ進める(前置)
 		*
-		* @retval ConstIterator ノードの前ノードのイテレータを返す
+		* @retval ConstIterator 前ノードのコンストイテレータを返す
 		*/
 		ConstIterator& operator--();
 
 		/**
 		* @brief リストの先頭に向かってイテレータを１つ進める(後置)
 		*
-		* @retval ConstIterator	 ノードの前ノードのイテレータを返す
+		* @retval ConstIterator	 呼び出したコンストイテレータのコンストイテレータを返す
 		*/
 		ConstIterator operator--(int);
 
 		/**
 		* @brief リストの末尾に向かってイテレータを１つ進める(前置)
 		*
-		* @retval ConstIterator ノードの次ノードのイテレータを返す
+		* @retval ConstIterator 次ノードのコンストイテレータを返す
 		*/
 		ConstIterator& operator++();
 
 		/**
 		* @brief リストの末尾に向かってイテレータを１つ進める(後置)
 		*
-		* @retval ConstIterator	 ノードの前ノードのイテレータを返す
+		* @retval ConstIterator	 呼び出したコンストイテレータのコンストイテレータを返す
 		*/
 		ConstIterator operator++(int);
 
@@ -161,8 +161,39 @@ public:
 
 		/**
 		* @brief イテレータの指定する位置の要素を返す(非const)
+		* 
+		* @retval T ノード内にあるdataを返す
 		*/
 		T& operator*()const;
+
+		/**
+		* @brief リストの先頭に向かってイテレータを１つ進める(前置)
+		*
+		* @retval Iterator 前ノードのイテレータを返す
+		*/
+		Iterator& operator--();
+
+		/**
+		* @brief リストの先頭に向かってイテレータを１つ進める(後置)
+		*
+		* @retval Iterator 呼び出したイテレータのイテレータを返す
+		*/
+		Iterator operator--(int);
+
+		/**
+		* @brief リストの末尾に向かってイテレータを１つ進める(前置)
+		*
+		* @retval Iterator 次ノードのイテレータを返す
+		*/
+		Iterator operator++();
+
+		/**
+		* @brief リストの末尾に向かってイテレータを１つ進める(後置)
+		*
+		* @retval Iterator 呼び出したイテレータのイテレータを返す
+		*/
+		Iterator operator++(int);
+
 	};
 
 public:

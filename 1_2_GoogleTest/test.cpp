@@ -19,6 +19,17 @@ public:
 	}
 };
 
+namespace TestHelper
+{
+	template<typename T>
+	void InsertLoop(DoublyLinkedList<T>& list)
+	{
+		for (int i = 0;i < 3;++i) {
+			ASSERT_TRUE(list.insert(list.end(), g_Data[i]));
+		}
+	}
+}
+
 namespace ex01_DataStructure
 {
 	namespace chapter2

@@ -71,13 +71,13 @@ inline typename DoublyLinkedList<T>::ConstIterator& DoublyLinkedList<T>::ConstIt
 template<typename T>
 inline typename bool DoublyLinkedList<T>::ConstIterator::operator==(const typename DoublyLinkedList<T>::ConstIterator& other) const
 {
-	return _node == other._node;
+	return _list == other._list && _node == other._node;
 }
 
 template<typename T>
 inline typename bool DoublyLinkedList<T>::ConstIterator::operator!=(const typename DoublyLinkedList<T>::ConstIterator& other) const
 {
-	return _node != other._node;
+	return _list != other._list || _node != other._node;
 }
 
 template<typename T>
@@ -87,6 +87,40 @@ inline T& DoublyLinkedList<T>::Iterator::operator*() const
 	assert(this->_node != nullptr);
 	assert(this->_node != this->_list->_sentinel);
 	return this->_node->data;
+}
+
+template<typename T>
+inline typename DoublyLinkedList<T>::Iterator& DoublyLinkedList<T>::Iterator::operator--()
+{
+	assert(this->_list != nullptr);
+	assert(this->_node != nullptr);
+	this->_node = this->_node->prev;
+	return *this;
+}
+
+template<typename T>
+inline typename DoublyLinkedList<T>::Iterator DoublyLinkedList<T>::Iterator::operator--(int)
+{
+	Iterator tmp = *this;
+	--(*this);
+	return tmp;
+}
+
+template<typename T>
+inline typename DoublyLinkedList<T>::Iterator DoublyLinkedList<T>::Iterator::operator++()
+{
+	assert(this->_list != nullptr);
+	assert(this->_node != nullptr);
+	this->_node = this->_node->next;// 次のノードへ
+	return *this;
+}
+
+template<typename T>
+inline typename DoublyLinkedList<T>::Iterator DoublyLinkedList<T>::Iterator::operator++(int)
+{
+	Iterator tmp = *this;
+	++(*this);
+	return tmp;
 }
 
 template<typename T>
