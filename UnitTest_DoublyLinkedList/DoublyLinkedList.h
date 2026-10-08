@@ -6,13 +6,11 @@
 /**
 * @brief 成績データ
 * @details スコアとネーム用の変数を保持する構造体
-* @var score
-* @var name
 */
 struct ScoreData
 {
-	int score = 0;
-	std::string name = "";
+	int score = 0;			// スコア
+	std::string name = "";	// 表示名
 };
 
 /**
@@ -44,11 +42,10 @@ public:
 	DoublyLinkedList& operator=(const DoublyLinkedList&) = delete;
 
 	class Iterator;
-
-	/**
-	* @brief コンストイテレータ
-	* @details 読み取り専用のイテレータ
-	*/
+/**
+* @brief コンストイテレータ
+* @details 読み取り専用のイテレータ
+*/
 	class  ConstIterator {
 		friend class DoublyLinkedList<T>;
 	protected:
@@ -71,29 +68,29 @@ public:
 
 		/**
 		* @brief イテレータの指定する位置の要素を取得する(const)
-		* 
+		*
 		* @retval data 指定位置のノードの要素を返す
 		*/
-		const ScoreData& operator*()const;
+		const T& operator*()const;
 
 		/**
 		* @brief リストの先頭に向かってイテレータを１つ進める(前置)
-		* 
-		* @retval ConstIterator ノードの前ノードのイテレータを返す 
+		*
+		* @retval ConstIterator ノードの前ノードのイテレータを返す
 		*/
 		ConstIterator& operator--();
 
 		/**
 		* @brief リストの先頭に向かってイテレータを１つ進める(後置)
-		* 
+		*
 		* @retval ConstIterator	 ノードの前ノードのイテレータを返す
 		*/
 		ConstIterator operator--(int);
 
 		/**
 		* @brief リストの末尾に向かってイテレータを１つ進める(前置)
-		* 
-		* @retval ConstIterator ノードの次ノードのイテレータを返す 
+		*
+		* @retval ConstIterator ノードの次ノードのイテレータを返す
 		*/
 		ConstIterator& operator++();
 
@@ -106,25 +103,25 @@ public:
 
 		/**
 		* @brief コピーを行う(引数付きコンストラクタ)
-		* 
+		*
 		* @param[in] node	コピー元のノード
 		*/
 		ConstIterator(Node* node) : _node(node) {}
 
 		/**
 		* @brief イテレータの代入をする
-		* 
+		*
 		* @param[in] other			代入するイテレータ
-		* 
+		*
 		* @retval ConstIterator		代入されたイテレータ
 		*/
 		ConstIterator& operator=(const Iterator& other);
 
 		/**
 		* @brief イテレータ同士が同一か比較する
-		* 
+		*
 		* @param[in] other		比較対象のイテレータ
-		* 
+		*
 		* @retval true			同一のイテレータであるため成功
 		* @retval false			同一のイテレータでないため失敗
 		*/
