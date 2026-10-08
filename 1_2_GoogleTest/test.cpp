@@ -411,9 +411,7 @@ namespace ex01_DataStructure
 			TEST(GetBeginIterator, ID23_EmptyGetIterator)
 			{
 				DoublyLinkedList list{};
-				DoublyLinkedList::Iterator it(&list, nullptr);
-				auto begin = list.begin();
-				ASSERT_TRUE(begin == it);
+				ASSERT_TRUE(list.begin() == list.end());
 			}
 
 			// ID:24
@@ -543,9 +541,7 @@ namespace ex01_DataStructure
 			TEST(GetBeginConstIterator, ID29_EmptyGetBeginConstIterator)
 			{
 				DoublyLinkedList list{};
-				DoublyLinkedList::ConstIterator cIt(&list, nullptr);
-				auto cbegin = list.cbegin();
-				ASSERT_TRUE(cbegin == cIt);
+				ASSERT_TRUE(list.cbegin() == list.cend());
 			}
 
 			// ID:30
@@ -667,8 +663,7 @@ namespace ex01_DataStructure
 			TEST(GetEndIterator, ID35_EmptyGetEndIterator)
 			{
 				DoublyLinkedList list{};
-				DoublyLinkedList::Iterator it(&list, nullptr);
-				ASSERT_TRUE(list.end() == it);
+				ASSERT_TRUE(list.end() == list.begin());
 			}
 
 			// ID:36
@@ -676,10 +671,8 @@ namespace ex01_DataStructure
 			{
 				DoublyLinkedList list{};
 				ASSERT_TRUE(list.insert(list.end(), ScoreData{10,"aaa"}));
-				DoublyLinkedList::Iterator it(&list, nullptr);
-				ASSERT_TRUE(list.end() == it);
-				it = list.end();
-				--it;
+				
+				auto it = --list.end();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == 10 && itData.name == "aaa");
 				ASSERT_TRUE(list.clear());
@@ -694,8 +687,7 @@ namespace ex01_DataStructure
 				for (int i = 0;i < 3;++i) {
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-				auto it = list.end();
-				--it;
+				auto it = --list.end();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
 				ASSERT_TRUE(list.clear());
@@ -712,10 +704,7 @@ namespace ex01_DataStructure
 				}
 				list.insert(list.begin(), ScoreData());
 
-				DoublyLinkedList::Iterator it(&list, nullptr);
-				ASSERT_TRUE(list.end() == it);
-				it = list.end();
-				--it;
+				auto it = --list.end();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
 				ASSERT_TRUE(list.clear());
@@ -732,10 +721,7 @@ namespace ex01_DataStructure
 				}
 				ASSERT_TRUE(list.insert(++list.begin(), ScoreData()));
 
-				DoublyLinkedList::Iterator it(&list, nullptr);
-				ASSERT_TRUE(list.end() == it);
-				it = list.end();
-				--it;
+				auto it = --list.end();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
 				ASSERT_TRUE(list.clear());
@@ -752,9 +738,7 @@ namespace ex01_DataStructure
 				}
 				ASSERT_TRUE(list.insert(list.end(), ScoreData{40,"ddd"}));
 
-				DoublyLinkedList::Iterator it(&list, nullptr);
-				ASSERT_TRUE(list.end() == it);
-				it = --list.end();
+				auto it = --list.end();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == 40 && itData.name == "ddd");
 			}
@@ -769,9 +753,7 @@ namespace ex01_DataStructure
 				}
 				ASSERT_TRUE(list.erase(list.begin()));
 
-				DoublyLinkedList::Iterator it(&list, nullptr);
-				ASSERT_TRUE(list.end() == it);
-				it = --list.end();
+				auto it = --list.end();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
 				ASSERT_TRUE(list.clear());
@@ -788,9 +770,7 @@ namespace ex01_DataStructure
 				}
 				ASSERT_TRUE(list.erase(++list.begin()));
 
-				DoublyLinkedList::Iterator it(&list, nullptr);
-				ASSERT_TRUE(list.end() == it);
-				it = --list.end();
+				auto it = --list.end();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
 				ASSERT_TRUE(list.clear());
@@ -807,9 +787,7 @@ namespace ex01_DataStructure
 				}
 				ASSERT_TRUE(list.erase(--list.end()));
 
-				DoublyLinkedList::Iterator it(&list, nullptr);
-				ASSERT_TRUE(list.end() == it);
-				it = --list.end();
+				auto it = --list.end();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
 				ASSERT_TRUE(list.clear());
@@ -820,9 +798,8 @@ namespace ex01_DataStructure
 			TEST(GetEndConstIterator, ID41_EmptyGetConstIterator)
 			{
 				DoublyLinkedList list{};
-				DoublyLinkedList::ConstIterator cIt(&list,nullptr);
 
-				ASSERT_TRUE(list.cend() == cIt);
+				ASSERT_TRUE(list.cend() == list.begin());
 			}
 
 			// ID:42
@@ -830,9 +807,6 @@ namespace ex01_DataStructure
 			{
 				DoublyLinkedList list{};
 				ASSERT_TRUE(list.insert(list.end(), ScoreData{10,"aaa"}));
-
-				DoublyLinkedList::ConstIterator cIt(&list, nullptr);
-				ASSERT_TRUE(list.cend() == cIt);
 
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
@@ -849,9 +823,6 @@ namespace ex01_DataStructure
 				for (int i = 0;i < 3;++i) {
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
-
-				DoublyLinkedList::ConstIterator cIt(&list, nullptr);
-				ASSERT_TRUE(list.cend() == cIt);
 
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
@@ -870,9 +841,6 @@ namespace ex01_DataStructure
 				}
 				ASSERT_TRUE(list.insert(list.begin(),ScoreData()));
 
-				DoublyLinkedList::ConstIterator cIt(&list, nullptr);
-				ASSERT_TRUE(list.cend() == cIt);
-
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
@@ -889,9 +857,6 @@ namespace ex01_DataStructure
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				ASSERT_TRUE(list.insert(++list.begin(), ScoreData{100,"ddd"}));
-
-				DoublyLinkedList::ConstIterator cIt(&list, nullptr);
-				ASSERT_TRUE(list.cend() == cIt);
 
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
@@ -910,9 +875,6 @@ namespace ex01_DataStructure
 				}
 				ASSERT_TRUE(list.insert(list.end(), ScoreData{100,"ddd"}));
 
-				DoublyLinkedList::ConstIterator cIt(&list, nullptr);
-				ASSERT_TRUE(list.cend() == cIt);
-
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == 100 && itData.name == "ddd");
@@ -929,9 +891,6 @@ namespace ex01_DataStructure
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				ASSERT_TRUE(list.erase(list.begin()));
-
-				DoublyLinkedList::ConstIterator cIt(&list, nullptr);
-				ASSERT_TRUE(list.cend() == cIt);
 
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
@@ -950,9 +909,6 @@ namespace ex01_DataStructure
 				}
 				ASSERT_TRUE(list.erase(++list.begin()));
 
-				DoublyLinkedList::ConstIterator cIt(&list, nullptr);
-				ASSERT_TRUE(list.cend() == cIt);
-
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
@@ -969,9 +925,6 @@ namespace ex01_DataStructure
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				list.erase(--list.end());
-
-				DoublyLinkedList::ConstIterator cIt(&list, nullptr);
-				ASSERT_TRUE(list.cend() == cIt);
 
 				auto it = --list.cend();
 				ScoreData itData = it.operator*();

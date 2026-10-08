@@ -101,17 +101,10 @@ public:
 		const DoublyLinkedList* _list = nullptr;
 		Node* _node = nullptr;
 
+		ConstIterator(const DoublyLinkedList* list, Node* node)
+			: _list(list), _node(node){}
 	public:
 		ConstIterator() = default;
-
-		ConstIterator(const DoublyLinkedList* list, Node* node)
-			: _list(list), _node(node) 
-		{
-#ifdef _DEBUG
-			assert(!(list == nullptr && node != nullptr));
-#endif // _DEBUG
-
-		}
 
 		// イテレータの指す要素を取得する(const)
 		const ScoreData& operator*()const {
@@ -193,17 +186,11 @@ public:
 	class Iterator : public ConstIterator
 	{
 		friend class DoublyLinkedList;
-		
+		Iterator(const DoublyLinkedList* list, Node* node)
+			: ConstIterator(list, node){}
 	public:
 		Iterator() = default;
-		Iterator(const DoublyLinkedList* list, Node* node)
-			: ConstIterator(list, node) 
-		{
-#ifdef _DEBUG
-			assert(!(list == nullptr && node != nullptr));
-#endif // _DEBUG
-
-		}
+		
 
 		// イテレータの指す要素を取得する(非const)
 		ScoreData& operator*()const {
