@@ -115,16 +115,14 @@ public:
 
 		// リストの先頭に向かって１つ進める(前置)
 		ConstIterator& operator--() {
-			if (_node == nullptr) {
-				if (_list == nullptr)return *this;
+			assert(_list != nullptr);
+			if (_node == nullptr)
+			{
+				assert(_list->_tail != nullptr);
 				_node = _list->_tail;
 				return *this;
 			}
-			if (_node->prev == nullptr) {
-				_node = nullptr;
-				return *this;
-			}
-
+			assert(_node != _list->_head);
 			_node = _node->prev;
 			return *this;
 		}
@@ -139,13 +137,9 @@ public:
 
 		// リストの末尾に向かって１つ進める（前置）
 		ConstIterator& operator++() {
-			if (_node == nullptr) {
-				return *this;
-			}
-			if (_node->next == nullptr) {
-				_node = nullptr;
-				return *this;
-			}
+			assert(_list != nullptr);
+			assert(_node != nullptr);
+			assert(_node != _list->_tail);
 			_node = _node->next;// 次のノードへ
 			return *this;
 		};

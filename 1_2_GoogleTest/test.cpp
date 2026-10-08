@@ -77,8 +77,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 				list.insert(list.end(), ScoreData());
 				EXPECT_EQ(1, list.size());
-				auto it = list.begin();
-				--it;
+				auto it = list.end();
 				ASSERT_FALSE(list.erase(it));
 				EXPECT_EQ(1, list.size());
 				ASSERT_TRUE(list.clear());
@@ -298,10 +297,13 @@ namespace ex01_DataStructure
 			// ID:14 
 			TEST(InsertTest, ID14_InvalidIteratorTest)
 			{
-				DoublyLinkedList list{};
+				DoublyLinkedList list{}, list2{};
 				DoublyLinkedList::ConstIterator bummy;
 
-				ASSERT_FALSE(list.insert(bummy, {11,"aaa"}));
+				ASSERT_FALSE(list.insert(bummy, ScoreData()));
+				ASSERT_EQ(0, list.size());
+
+				ASSERT_FALSE(list.insert(list2.begin(), ScoreData()));
 				ASSERT_EQ(0, list.size());
 			}
 
@@ -311,6 +313,7 @@ namespace ex01_DataStructure
 				DoublyLinkedList list{};
 
 				ASSERT_FALSE(list.erase(list.begin()));
+				ASSERT_FALSE(list.erase(list.end()));
 			}
 
 			// ID:17
@@ -325,6 +328,14 @@ namespace ex01_DataStructure
 		
 				ASSERT_TRUE(list.erase(it));
 				ASSERT_TRUE(it != list.begin());
+
+				it = list.begin();
+				auto itData = it.operator*();
+				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
+				++it;
+				itData = it.operator*();
+				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
+
 				ASSERT_TRUE(list.clear());
 				ASSERT_EQ(0, list.size());
 			}
@@ -355,10 +366,10 @@ namespace ex01_DataStructure
 				auto it = list.begin();
 				++it;
 				ASSERT_TRUE(list.erase(it));
-				ScoreData itData = list.begin().operator*();
+				it = list.begin();
+				ScoreData itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
-				it = list.end();
-				--it;
+				++it;
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
 				ASSERT_TRUE(list.clear());
@@ -389,10 +400,11 @@ namespace ex01_DataStructure
 			// ID:21
 			TEST(EraseTest, ID21_DummyIteratorEraseTest)
 			{
-				DoublyLinkedList list{};
+				DoublyLinkedList list{}, list2{};
 				DoublyLinkedList::Iterator it;
 
 				ASSERT_FALSE(list.erase(it));
+				ASSERT_FALSE(list.erase(list2.begin()));
 			}
 
 			// ID:23
@@ -585,7 +597,7 @@ namespace ex01_DataStructure
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				ASSERT_TRUE(list.insert(++list.begin(), data[3]));
-				ScoreData itData = list.begin().operator*();
+				ScoreData itData = list.cbegin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 				ASSERT_TRUE(list.clear());
 				ASSERT_EQ(0, list.size());
@@ -600,7 +612,7 @@ namespace ex01_DataStructure
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				ASSERT_TRUE(list.insert(list.end(),data[3]));
-				ScoreData itData = list.begin().operator*();
+				ScoreData itData = list.cbegin().operator*();
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 				ASSERT_TRUE(list.clear());
 				ASSERT_EQ(0, list.size());
@@ -963,7 +975,9 @@ namespace ex01_DataStructure
 			TEST(GetTheElementTheIteratorPoints, ID00_TheListHasNoReference)
 			{
 				DoublyLinkedList::Iterator it;
+				DoublyLinkedList::ConstIterator cIt;
 				EXPECT_DEATH(*it, "Assertion failed");
+				EXPECT_DEATH(*cIt, "Assertion failed");
 			}
 #endif // _DEBUG
 
@@ -1009,9 +1023,10 @@ namespace ex01_DataStructure
 			TEST(IteratorMoveOneStepTowardEnd, ID05_ListNoReferanceGetEndIterator)
 			{
 				DoublyLinkedList::Iterator it;
-				++it;
-				it.operator=(it);
-				EXPECT_DEATH(it.operator*(), "Assertion failed");
+				DoublyLinkedList::ConstIterator cIt;
+
+				EXPECT_DEATH(++it, "Assertion failed");
+				EXPECT_DEATH(++cIt, "Assertion failed");
 			}
 
 			// ID:06
@@ -1019,9 +1034,7 @@ namespace ex01_DataStructure
 			{
 				DoublyLinkedList list{};
 				auto it = list.begin();
-
-				++it;
-				EXPECT_DEATH(it.operator*(), "Assertion failed");
+				EXPECT_DEATH(++it, "Assertion failed");
 			}
 
 			// ID:07
@@ -1029,9 +1042,7 @@ namespace ex01_DataStructure
 			{
 				DoublyLinkedList list{};
 				auto it = list.end();
-
-				++it;
-				EXPECT_DEATH(it.operator*(), "Assertion failed");
+				EXPECT_DEATH(++it, "Assertion failed");
 			}
 #endif
 
@@ -1070,9 +1081,13 @@ namespace ex01_DataStructure
 
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 
-				++it;
+				auto preIt = ++it;
+
+				ASSERT_TRUE(it == preIt);
+
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
+
 				ASSERT_TRUE(list.clear());
 				ASSERT_EQ(0, list.size());
 			}
@@ -1090,7 +1105,10 @@ namespace ex01_DataStructure
 
 				ASSERT_TRUE(itData.score == data[0].score && itData.name == data[0].name);
 
-				it++;
+				auto postIt = it++;
+
+				ASSERT_TRUE(it != postIt);
+
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
 				ASSERT_TRUE(list.clear());
@@ -1102,9 +1120,9 @@ namespace ex01_DataStructure
 			TEST(IteratorMoveOneStepTowardBegin, ID11_ListNoReferanceGetEndIterator)
 			{
 				DoublyLinkedList::Iterator it;
-				it.operator--();
-				it.operator=(it);
-				EXPECT_DEATH(it.operator*(), "Assertion failed");
+				DoublyLinkedList::ConstIterator cIt;
+				EXPECT_DEATH(--it, "Assertion failed");
+				EXPECT_DEATH(--cIt, "Assertion failed");
 			}
 
 			// ID:12
@@ -1112,8 +1130,7 @@ namespace ex01_DataStructure
 			{
 				DoublyLinkedList list{};
 				auto it = list.end();
-				it.operator--();
-				EXPECT_DEATH(it.operator*(), "Assertion failed");
+				EXPECT_DEATH(--it, "Assertion failed");
 			}
 
 			// ID:13
@@ -1121,8 +1138,7 @@ namespace ex01_DataStructure
 			{
 				DoublyLinkedList list{};
 				auto it = list.begin();
-				it.operator--();
-				EXPECT_DEATH(it.operator*(), "Assertion failed");
+				EXPECT_DEATH(--it, "Assertion failed");
 			}
 #endif // _DEBUG
 
@@ -1135,7 +1151,7 @@ namespace ex01_DataStructure
 					ASSERT_TRUE(list.insert(list.end(),data[i]));
 				}
 				auto it = list.end();
-				it.operator--();
+				--it;
 				auto itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
 				--it;
@@ -1162,7 +1178,10 @@ namespace ex01_DataStructure
 
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
 
-				--it;
+				auto preIt = --it;
+				
+				ASSERT_TRUE(it == preIt);
+
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
 				ASSERT_TRUE(list.clear());
@@ -1183,7 +1202,10 @@ namespace ex01_DataStructure
 
 				ASSERT_TRUE(itData.score == data[2].score && itData.name == data[2].name);
 
-				it--;
+				auto postIt = it--;
+
+				ASSERT_TRUE(it != postIt);
+
 				itData = it.operator*();
 				ASSERT_TRUE(itData.score == data[1].score && itData.name == data[1].name);
 				ASSERT_TRUE(list.clear());
