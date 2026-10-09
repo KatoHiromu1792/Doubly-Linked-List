@@ -210,3 +210,13 @@ inline typename DoublyLinkedList<T>::Iterator DoublyLinkedList<T>::end()
 	return Iterator(this, _sentinel);
 }
 
+template<typename T>
+inline void DoublyLinkedList<T>::QuickSort(SortOrder order, SortKey key)
+{
+	if (this->_size <= 1) return false;// リスト内に要素が1以下しか存在しない場合
+
+
+
+	return true;
+}
+

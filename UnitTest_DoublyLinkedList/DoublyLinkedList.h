@@ -11,7 +11,7 @@
 struct ScoreData
 {
 	int score = 0;			// スコア
-	std::string name = "";	// 表示名
+	std::string name = "";	// ユーザー名
 };
 
 /**
@@ -28,9 +28,32 @@ private:
 	*/
 	struct Node
 	{
-		Node* prev;				// 前ポインタ
-		Node* next;				// 次ポインタ
-		T data;					// 成績データ
+		Node* prev;	// 前ポインタ
+		Node* next;	// 次ポインタ
+		T data;		// 成績データ
+	};
+
+	/**
+	* @brief ソートの順序
+	* 
+	* ソートをする際に昇順・降順を指定するための列挙型
+	*/
+	enum class SortOrder
+	{
+		Ascending,	// 昇順
+		Descending,	// 降順
+	};
+
+	/**
+	* @brief ソート対象
+	* 
+	* ソートをする対象を指定するための列挙型
+	*/
+	enum class SortKey
+	{
+		Score,	// スコア
+		Name,	// ユーザー名
+		Both,	// スコアとユーザー名の両方が対象
 	};
 
 private:
@@ -263,6 +286,17 @@ public:
 	* @retval _sentinel		番兵ノードのイテレータを返す
 	*/
 	Iterator end();
+
+	/**
+	* @brief クイックソートを行う関数
+	* 
+	* @param[in] order	ソート順を指定
+	* @param[in] key	ソート対象を指定
+	* 
+	* @retval true		クイックソートが成功
+	* @retval false		リスト内の要素数が１以下でソート失敗
+	*/
+	void QuickSort(SortOrder order, SortKey key);
 };
 
 #include "DoublyLinkedList.inl"
