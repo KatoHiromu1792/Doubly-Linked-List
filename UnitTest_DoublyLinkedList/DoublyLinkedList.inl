@@ -191,7 +191,7 @@ inline typename DoublyLinkedList<T>::ConstIterator DoublyLinkedList<T>::cbegin()
 template<typename T>
 inline typename DoublyLinkedList<T>::ConstIterator DoublyLinkedList<T>::cend() const
 {
-	return ConstIterator(this, &_sentinel);
+	return ConstIterator(this, const_cast<Node*> (&_sentinel));
 }
 
 template<typename T>
