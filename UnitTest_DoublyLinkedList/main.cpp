@@ -5,6 +5,17 @@
 
 #define SCORE_FILE_PATH ("Scores.txt")
 
+/**
+* @brief 成績データ
+*
+* スコアとネーム用の変数を保持する構造体
+*/
+struct ScoreData
+{
+	int score = 0;			// スコア
+	std::string name = "";	// ユーザー名
+};
+
 template<typename T>
 bool LoadFile(DoublyLinkedList<T>* list, const char* filePath);
 

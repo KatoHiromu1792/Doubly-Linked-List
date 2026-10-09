@@ -4,6 +4,17 @@
 
 #define MAX_DATA_NUM (4)
 
+/**
+* @brief 成績データ
+*
+* スコアとネーム用の変数を保持する構造体
+*/
+struct ScoreData
+{
+	int score = 0;			// スコア
+	std::string name = "";	// ユーザー名
+};
+
 namespace {
 	const ScoreData g_Data[MAX_DATA_NUM] = { {10,"aaa"},{20,"bbb"},{30,"ccc"},{40,"ddd"} };
 }

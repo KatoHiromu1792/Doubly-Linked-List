@@ -4,17 +4,6 @@
 #include <assert.h>
 
 /**
-* @brief 成績データ
-* 
-* スコアとネーム用の変数を保持する構造体
-*/
-struct ScoreData
-{
-	int score = 0;			// スコア
-	std::string name = "";	// ユーザー名
-};
-
-/**
 * @brief 双方向リストクラス
 */
 template<typename T>
