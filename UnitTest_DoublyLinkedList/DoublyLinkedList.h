@@ -4,17 +4,6 @@
 #include <assert.h>
 
 /**
-* @brief 成績データ
-* 
-* スコアとネーム用の変数を保持する構造体
-*/
-struct ScoreData
-{
-	int score = 0;			// スコア
-	std::string name = "";	// ユーザー名
-};
-
-/**
 * @brief 双方向リストクラス
 */
 template<typename T>
@@ -57,8 +46,8 @@ private:
 	};
 
 private:
-	Node* _sentinel = nullptr;	// 番兵ノード
-	int _size = 0;				// 要素数
+	Node _sentinel;	// 番兵ノード
+	int _size = 0;	// 要素数
 
 public:
 	DoublyLinkedList();
@@ -79,8 +68,7 @@ public:
 		Node* _node = nullptr;
 
 		ConstIterator(const DoublyLinkedList<T>* list, Node* node)
-			: _list(list), _node(node) {
-		}
+			: _list(list), _node(node) {}
 	public:
 		/**
 		* @brief デフォルトコンストラクタ
@@ -172,8 +160,7 @@ public:
 	{
 		friend class DoublyLinkedList<T>;
 		Iterator(const DoublyLinkedList<T>* list, Node* node)
-			: ConstIterator(list, node) {
-		}
+			: ConstIterator(list, node) {}
 	public:
 		/**
 		* @brief デフォルトコンストラクタ
@@ -286,17 +273,6 @@ public:
 	* @retval _sentinel		番兵ノードのイテレータを返す
 	*/
 	Iterator end();
-
-	/**
-	* @brief クイックソートを行う関数
-	* 
-	* @param[in] order	ソート順を指定
-	* @param[in] key	ソート対象を指定
-	* 
-	* @retval true		クイックソートが成功
-	* @retval false		リスト内の要素数が１以下でソート失敗
-	*/
-	void QuickSort(SortOrder order, SortKey key);
 };
 
 #include "DoublyLinkedList.inl"

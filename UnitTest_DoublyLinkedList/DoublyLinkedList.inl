@@ -1,20 +1,16 @@
 #include "DoublyLinkedList.h"
+
 template<typename T>
-inline DoublyLinkedList<T>::DoublyLinkedList() :_size(0) 
+inline DoublyLinkedList<T>::DoublyLinkedList() :_sentinel(), _size(0)
 {
-	_sentinel = new Node();
-	_sentinel->prev = _sentinel;
-	_sentinel->next = _sentinel;
+	_sentinel.prev = &_sentinel;
+	_sentinel.next = &_sentinel;
 }
 
 template<typename T>
 inline DoublyLinkedList<T>::~DoublyLinkedList()
 {
 	this->clear();
-	if (_sentinel) {
-		delete _sentinel;
-		_sentinel = nullptr;
-	}
 }
 
 template<typename T>
@@ -22,7 +18,7 @@ inline const T& DoublyLinkedList<T>::ConstIterator::operator*() const
 {
 	assert(_list != nullptr);
 	assert(_node != nullptr);
-	assert(_node != _list->_sentinel);
+	assert(_node != &_list->_sentinel);
 	return _node->data;
 }
 
@@ -31,7 +27,7 @@ inline typename DoublyLinkedList<T>::ConstIterator& DoublyLinkedList<T>::ConstIt
 {
 	assert(_list != nullptr);
 	assert(_node != nullptr);
-	assert(_node->prev != _list->_sentinel);
+	assert(_node->prev != &_list->_sentinel);
 	_node = _node->prev;
 	return *this;
 }
@@ -49,7 +45,7 @@ inline typename DoublyLinkedList<T>::ConstIterator& DoublyLinkedList<T>::ConstIt
 {
 	assert(_list != nullptr);
 	assert(_node != nullptr);
-	assert(_node != _list->_sentinel);
+	assert(_node != &_list->_sentinel);
 	_node = _node->next;// 次のノードへ
 	return *this;
 }
@@ -87,7 +83,7 @@ inline T& DoublyLinkedList<T>::Iterator::operator*() const
 {
 	assert(this->_list != nullptr);
 	assert(this->_node != nullptr);
-	assert(this->_node != this->_list->_sentinel);
+	assert(this->_node != &this->_list->_sentinel);
 	return this->_node->data;
 }
 
@@ -96,7 +92,7 @@ inline typename DoublyLinkedList<T>::Iterator& DoublyLinkedList<T>::Iterator::op
 {
 	assert(this->_list != nullptr);
 	assert(this->_node != nullptr);
-	assert(this->_node->prev != this->_list->_sentinel);
+	assert(this->_node->prev != &this->_list->_sentinel);
 	this->_node = this->_node->prev;
 	return *this;
 }
@@ -114,7 +110,7 @@ inline typename DoublyLinkedList<T>::Iterator DoublyLinkedList<T>::Iterator::ope
 {
 	assert(this->_list != nullptr);
 	assert(this->_node != nullptr);
-	assert(this->_node != this->_list->_sentinel);
+	assert(this->_node != &this->_list->_sentinel);
 	this->_node = this->_node->next;// 次のノードへ
 	return *this;
 }
@@ -153,7 +149,7 @@ inline bool DoublyLinkedList<T>::erase(const ConstIterator& pos)
 	if (pos._list != this)return false;
 	Node* target = pos._node;
 
-	if (target == _sentinel)return false;
+	if (target == &_sentinel)return false;
 
 	Node* prev = target->prev;
 	Node* next = target->next;
@@ -170,17 +166,17 @@ inline bool DoublyLinkedList<T>::erase(const ConstIterator& pos)
 template<typename T>
 inline bool DoublyLinkedList<T>::clear()
 {
-	Node* curr = _sentinel->next;
+	Node* curr = _sentinel.next;
 	if (!curr) return false;
 
-	while (curr != _sentinel)
+	while (curr != &_sentinel)
 	{
 		Node* next = curr->next;
 		delete curr;
 		curr = next;
 	}
-	_sentinel->prev = _sentinel;
-	_sentinel->next = _sentinel;
+	_sentinel.prev = &_sentinel;
+	_sentinel.next = &_sentinel;
 	_size = 0;
 
 	return true;
@@ -189,34 +185,23 @@ inline bool DoublyLinkedList<T>::clear()
 template<typename T>
 inline typename DoublyLinkedList<T>::ConstIterator DoublyLinkedList<T>::cbegin() const
 {
-	return ConstIterator(this, _sentinel->next);
+	return ConstIterator(this, _sentinel.next);
 }
 
 template<typename T>
 inline typename DoublyLinkedList<T>::ConstIterator DoublyLinkedList<T>::cend() const
 {
-	return ConstIterator(this, _sentinel);
+	return ConstIterator(this, &_sentinel);
 }
 
 template<typename T>
 inline typename DoublyLinkedList<T>::Iterator DoublyLinkedList<T>::begin()
 {
-	return Iterator(this, _sentinel->next);
+	return Iterator(this, _sentinel.next);
 }
 
 template<typename T>
 inline typename DoublyLinkedList<T>::Iterator DoublyLinkedList<T>::end()
 {
-	return Iterator(this, _sentinel);
+	return Iterator(this, &_sentinel);
 }
-
-template<typename T>
-inline void DoublyLinkedList<T>::QuickSort(SortOrder order, SortKey key)
-{
-	if (this->_size <= 1) return false;// リスト内に要素が1以下しか存在しない場合
-
-
-
-	return true;
-}
-

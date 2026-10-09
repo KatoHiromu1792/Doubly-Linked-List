@@ -4,6 +4,17 @@
 
 #define MAX_DATA_NUM (4)
 
+/**
+* @brief 成績データ
+*
+* スコアとネーム用の変数を保持する構造体
+*/
+struct ScoreData
+{
+	int score = 0;			// スコア
+	std::string name = "";	// ユーザー名
+};
+
 namespace {
 	const ScoreData g_Data[MAX_DATA_NUM] = { {10,"aaa"},{20,"bbb"},{30,"ccc"},{40,"ddd"} };
 }
@@ -19,7 +30,7 @@ namespace TestHelper
 	template<typename T>
 	void InsertLoop(DoublyLinkedList<T>& list,int num)
 	{
-		if (num >= MAX_DATA_NUM) num = 3;
+		if (num > MAX_DATA_NUM) num = MAX_DATA_NUM;
 		for (int i = 0;i < num;++i) {
 			ASSERT_TRUE(list.insert(list.end(), g_Data[i]));
 		}
@@ -197,7 +208,7 @@ namespace ex01_DataStructure
 			TEST(InsertTest, ID12_InsertPushFrontTest)
 			{
 				DoublyLinkedList<ScoreData> list{};
-				TestHelper::InsertLoop(list, 4);
+				TestHelper::InsertLoop(list, 3);
 				auto it = list.begin();
 				ASSERT_TRUE(list.insert(it, g_Data[2]));
 
