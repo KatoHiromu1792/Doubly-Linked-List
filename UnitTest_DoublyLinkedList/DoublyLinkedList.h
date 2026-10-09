@@ -5,7 +5,8 @@
 
 /**
 * @brief 成績データ
-* @details スコアとネーム用の変数を保持する構造体
+* 
+* スコアとネーム用の変数を保持する構造体
 */
 struct ScoreData
 {
@@ -22,7 +23,8 @@ class DoublyLinkedList
 private:
 	/**
 	* @brief ノード
-	* @details 前後のポインタと成績データを保持する構造体
+	* 
+	* 前後のポインタと成績データを保持する構造体
 	*/
 	struct Node
 	{
@@ -44,7 +46,8 @@ public:
 	class Iterator;
 /**
 * @brief コンストイテレータ
-* @details 読み取り専用のイテレータ
+* 
+* 読み取り専用のイテレータ
 */
 	class  ConstIterator {
 		friend class DoublyLinkedList<T>;

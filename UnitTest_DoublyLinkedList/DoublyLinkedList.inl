@@ -31,6 +31,7 @@ inline typename DoublyLinkedList<T>::ConstIterator& DoublyLinkedList<T>::ConstIt
 {
 	assert(_list != nullptr);
 	assert(_node != nullptr);
+	assert(_node->prev != _list->_sentinel);
 	_node = _node->prev;
 	return *this;
 }
@@ -48,6 +49,7 @@ inline typename DoublyLinkedList<T>::ConstIterator& DoublyLinkedList<T>::ConstIt
 {
 	assert(_list != nullptr);
 	assert(_node != nullptr);
+	assert(_node != _list->_sentinel);
 	_node = _node->next;// 次のノードへ
 	return *this;
 }
@@ -94,6 +96,7 @@ inline typename DoublyLinkedList<T>::Iterator& DoublyLinkedList<T>::Iterator::op
 {
 	assert(this->_list != nullptr);
 	assert(this->_node != nullptr);
+	assert(this->_node->prev != this->_list->_sentinel);
 	this->_node = this->_node->prev;
 	return *this;
 }
@@ -111,6 +114,7 @@ inline typename DoublyLinkedList<T>::Iterator DoublyLinkedList<T>::Iterator::ope
 {
 	assert(this->_list != nullptr);
 	assert(this->_node != nullptr);
+	assert(this->_node != this->_list->_sentinel);
 	this->_node = this->_node->next;// 次のノードへ
 	return *this;
 }
